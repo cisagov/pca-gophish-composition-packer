@@ -1,0 +1,26 @@
+---
+- hosts: all
+  name: Update base image, add banner, persist journald, install htop and docker
+  become: yes
+  become_method: sudo
+  roles:
+    - upgrade
+    - banner
+    - persist-journald
+    - htop
+    - docker
+
+# AWS instance types expose EBS volumes as NVMe block devices, so install nvme
+- hosts: aws
+  name: Install nvme
+  become: yes
+  become_method: sudo
+  roles:
+    - nvme
+
+- hosts: all
+  name: Install PCA GoPhish Docker composition
+  become: yes
+  become_method: sudo
+  roles:
+    - pca-gophish-composition
