@@ -1,0 +1,39 @@
+{
+  "builders": [
+    {
+      "ami_name": "pca-gophish-hvm-{{timestamp}}-x86_64-ebs",
+      "ami_regions": [],
+      "instance_type": "t3.micro",
+      "region": "us-east-2",
+      "source_ami_filter": {
+        "filters": {
+          "name": "debian-stretch-hvm-x86_64-gp2-*",
+          "root-device-type": "ebs",
+          "virtualization-type": "hvm"
+        },
+        "most_recent": true,
+        "owners": [
+          "379101102735"
+        ]
+      },
+      "ssh_username": "admin",
+      "tags": {
+        "Application": "Phishing Campaign Assessment",
+        "Base_AMI_Name": "{{ .SourceAMIName }}",
+        "OS_Version": "Debian Stretch",
+        "Release": "Latest",
+        "Team": "CISA NCATS Development"
+      },
+      "type": "amazon-ebs"
+    }
+  ],
+  "provisioners": [
+    {
+      "groups": [
+        "aws"
+      ],
+      "playbook_file": "ansible/playbook.yml",
+      "type": "ansible"
+    }
+  ]
+}
