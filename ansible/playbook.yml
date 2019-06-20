@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  name: Update base image, add banner, persist journald, install htop and docker
+  name: Update base image, add banner, persist journald, install htop
   become: yes
   become_method: sudo
   roles:
@@ -8,7 +8,6 @@
     - banner
     - persist-journald
     - htop
-    - docker
 
 # AWS instance types expose EBS volumes as NVMe block devices, so install nvme
 - hosts: aws

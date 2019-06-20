@@ -1,7 +1,5 @@
 - src: https://github.com/cisagov/ansible-role-banner
   name: banner
-- src: https://github.com/cisagov/ansible-role-docker
-  name: docker
 - src: https://github.com/cisagov/ansible-role-htop
   name: htop
 - src: https://github.com/cisagov/ansible-role-nvme
