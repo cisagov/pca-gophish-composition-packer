@@ -8,5 +8,7 @@
   name: pca-gophish-composition
 - src: https://github.com/cisagov/ansible-role-persist-journald
   name: persist-journald
+- src: https://github.com/cisagov/ansible-role-python
+  name: python
 - src: https://github.com/cisagov/ansible-role-upgrade
   name: upgrade

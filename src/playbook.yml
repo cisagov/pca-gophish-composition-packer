@@ -1,10 +1,11 @@
 ---
 - hosts: all
-  name: Update base image, add banner, persist journald, install htop
+  name: Setup base image
   become: yes
   become_method: sudo
   roles:
     - upgrade
+    - python
     - banner
     - persist-journald
     - htop
