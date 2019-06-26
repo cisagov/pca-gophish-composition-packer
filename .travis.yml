@@ -8,30 +8,30 @@ env:
   global:
     # AWS_ACCESS_KEY
     - secure: >-
-        AFHH7BSeaYUcfI2aN3bzbX+jKhAKa8IGMLtWlsmXTw35izAZQ9MOlgPZCFetAGIznxA
-        oJKv1xmqU4OZGPgTQVWlF3GSLxYV/Dw1Jp/wmCnxWkNyB4GUHExdgWwvFvdAJm7UNKi
-        yicGVqOU2UBPAY02h51M2PMdRqFNwOGdxZSeJTsLu4poDa65dD+HAKKQopI1zjt7pkD
-        wJ2TtTt9b7NN/yT+lzrU5dbq9x/QcC6ReRCR2VRU+RYUEvYaaUA04kIb4+2Ul+ywmtj
-        TYxhNUIqki2v9zb1UL74J7y7NmnFo9s4SETp7pMxF8K96ls97esF0pxOk2HhFdPdbEU
-        Bsk0bYmZWN6qokcJu6HABuqWU0a+Pu1MdymGxGLmjGvI2Ul3JFcvGuRMNf+PCihOPFd
-        6LauMZWMHwtzDAVfF3mZjS2GVhpFn+R5RiQx1DiUMYHxK2/WE6374L/ESo1rw7muHn2
-        UHjvHfg9h2Z4CGuTpHlbiw1DiYNjePUPC3EcLRbMSYK++BG+FnHN8cuMSnJ2CiT7RAn
-        IcguG9wrlOOzfLIqDBfjzqzOts1UXHw5qg83gV4YX1GJj5ikneaJe6iThJ9S4Bu6SZT
-        MpkOMRzcmKpQTBzNPujFOfv/pMI290AdrU5o59RZteIoYORWdiCr7paWD2oxSHcU0M/
-        rUki+7Zjgvz/w=
+        SIYKQXYk0Z1VfjaDBGMW0aAsF0lLDB8u7h02yOrhBe+AF5u6O4uWO7jhfn5MGSHWW7L
+        KsywqRETDpfufwFbMUV1Jn4oSxp80k3ZQ7bPJ53aCVzXvlxyKLYAly+pWV7KxCe0anZ
+        9R9BVTMI5VZgpQAz7ZM7+eGdHwQzeFaOxs2jKksQ3h4TbWNdi02r/YZGq86cdzy5RuG
+        2dGEV0LdOACTO4wwYR5gOyk1oPrNSjZ/9HWB2dCOwQgvVS00VQckqaTwoeTIhcHLKnh
+        eUOTtPqeNUG9JwE7Tevr8LdfXKqNCS3uvuyfA99enY07Xeig1DRY/43ZBH17lBmZSSW
+        njSDlmM9XnKqU8XrUdHb+A/dA1BQvjaP10GbScbTcqbCifC2H1bWLaabVAIFvuxyrUb
+        xlKg6MStHHn61cKP1Jk1tvYVbNfxd/3j/67lZS8V40kmpk3LhAMuPnrODi0ZqVWC+0W
+        qqRl7SDLK1BijjyMUFtdKkwVTAYHsis70g/iYMrRN8LMD77TX+RMg2WsN3zlVfU1ck/
+        pv76rPbNZW5TFXdvz8s9JZm6i4aj+u8LJhbwrnQe9E8A5XIkP6UKiTnpyY3HY1I/4b3
+        3V52hNhX81yWRB3QPG/+osrCGXML8ShXRcVTdCjgBBvpLCyvxaZ7b2U16wjIS1OK5FV
+        az4HnJ1iGqvoY=
     # AWS_SECRET_KEY
     - secure: >-
-        q2vjKa8dvtsuTdbsWPDTIYbJ8bx+TwwsbNP3ptF3Ou/6nTPdp0nFS7EEzGOEjkPOFMc
-        /8EYisxoyeokle2xxLQs/pnxl2EiBOky7O/E93ZY6nwSTB4Y6ZrmOSiFRtOIAakCrLa
-        uPsvpeleo15vlNsQCnY9XJ/55Etn05L+2OFDJXi43tqqPd8m6N92S/JJ6YSCwviCr8b
-        qDdvRLbSRwyQ9gfwym/R4evo4EY0gqww15UmfPw/iTo1IKqbsgfnm+Dk9aOfSFzOZbs
-        BzMHgiFL8NTJglL5mBRRsovilG2Fi1RtwHQGAdBB72iGCiyHCQRrf88cRDBBFxkif9m
-        MiHu9mjvrbMVAQsAYLkNWb790v5so3grwcDz9qVlrJO1sAJlPNnp78aRtmOwBirIk4j
-        TSweBTnUQ0GEyz7IfY3JmdW1Qnh+xLRzoD1fCLTz0DYg1f7fNUzYabJQ4Ut1VOHW4ai
-        I0E1DskroEzROPMfYsBjJ7Zk9QRSZlf8Bm9FdJFEZP/Guef7Kwe1SLMCa6NCUSZb7tx
-        7IHVtSz/dqEVdY8nB8B3cTYysE9ItlBJ/175IXXPBw+9MVIyY1+94fgciKrwYNkY0C2
-        ly56mh2xDmf0Iv+uZlqv3/cxn4yoG6hOrI9+NcdErWJmEfyxW7NgDB8V6efxv5c2yNx
-        QP5BQfUY3vklc=
+        mfrI/edHj0K7/5gb32BIDM7Rc23l0Yeu4ZrC+aJrV+PjmHjM3i5UeaL9+Fv5C4gjmuP
+        04wVSELv+R8iFmdWEcb9nzQl7xhKbcEpkrNtthqKguXciEh5nKGGcWlwijyRJ4Q7zuq
+        x0URmyeyT86W+K3IriSHGCWNMNewRCY0yWwwxmvf7SUp8jll9iqPB/pZrk0OCqTdOWm
+        10BHL3YmYJv/4cohLwAu9XWfS5gW6HO3VhoG5RkHv+exXUXettntzRDB04g57qngrry
+        wR+E2OQzNFhYjBgT8QG+wwncuybqM24agwf1jFvfffi+ElnK1YiZ/eG4vTAH0VIZLIo
+        /fhGe/R2wC+NHCLJiOWA3mUgfcSVcUg3WTl5ar8F57SptEJe45sxvJdQwhJjTlwyUvx
+        cTWThJQsZuApgL2DPc7fKYAc5nSh7cXOmiU9JmXo+glEEn6zFm4qbqEoHIJeDjIxF8K
+        Tk/CBVefIkeYqSEjA12baPqBsbuuZ0mkVYCXFRelsWUE7IL18534NDOr0HQnegcEF11
+        7FM97ZxSrN70rMerHRCd0I9xjYPdfxmTbD84jEfSwFRVZvVT0drBtt853ALxR3ytVDl
+        hS7EcXyuUfA6X6fbjM7EllczFonGF6gQpi38sFBCgpAHFuhXe+lB55T1ChgTGnNyDN3
+        RSfPAppJIXRhQ=
     - BUILD_REGION="us-east-2"
     - DEPLOY_REGIONS="us-east-1,us-west-1,us-west-2"
     # - IMAGE_VERSION=
