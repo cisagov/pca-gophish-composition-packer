@@ -24,3 +24,8 @@
   become_method: sudo
   roles:
     - pca-gophish-composition
+
+- hosts: all
+  name: Start up GoPhish Docker composition
+  docker_compose:
+    project_src: /var/pca/pca-gophish-composition
