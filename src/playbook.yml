@@ -28,5 +28,9 @@
 
 - hosts: all
   name: Start up GoPhish Docker composition
-  docker_compose:
-    project_src: /var/pca/pca-gophish-composition
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Start up GoPhish Docker composition
+      docker_compose:
+        project_src: /var/pca/pca-gophish-composition
