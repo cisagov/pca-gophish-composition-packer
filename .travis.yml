@@ -6,36 +6,35 @@ python: 3.7
 services: docker
 env:
   global:
-    # AWS_ACCESS_KEY
-    - secure: >-
-        SIYKQXYk0Z1VfjaDBGMW0aAsF0lLDB8u7h02yOrhBe+AF5u6O4uWO7jhfn5MGSHWW7L
-        KsywqRETDpfufwFbMUV1Jn4oSxp80k3ZQ7bPJ53aCVzXvlxyKLYAly+pWV7KxCe0anZ
-        9R9BVTMI5VZgpQAz7ZM7+eGdHwQzeFaOxs2jKksQ3h4TbWNdi02r/YZGq86cdzy5RuG
-        2dGEV0LdOACTO4wwYR5gOyk1oPrNSjZ/9HWB2dCOwQgvVS00VQckqaTwoeTIhcHLKnh
-        eUOTtPqeNUG9JwE7Tevr8LdfXKqNCS3uvuyfA99enY07Xeig1DRY/43ZBH17lBmZSSW
-        njSDlmM9XnKqU8XrUdHb+A/dA1BQvjaP10GbScbTcqbCifC2H1bWLaabVAIFvuxyrUb
-        xlKg6MStHHn61cKP1Jk1tvYVbNfxd/3j/67lZS8V40kmpk3LhAMuPnrODi0ZqVWC+0W
-        qqRl7SDLK1BijjyMUFtdKkwVTAYHsis70g/iYMrRN8LMD77TX+RMg2WsN3zlVfU1ck/
-        pv76rPbNZW5TFXdvz8s9JZm6i4aj+u8LJhbwrnQe9E8A5XIkP6UKiTnpyY3HY1I/4b3
-        3V52hNhX81yWRB3QPG/+osrCGXML8ShXRcVTdCjgBBvpLCyvxaZ7b2U16wjIS1OK5FV
-        az4HnJ1iGqvoY=
-    # AWS_SECRET_KEY
-    - secure: >-
-        mfrI/edHj0K7/5gb32BIDM7Rc23l0Yeu4ZrC+aJrV+PjmHjM3i5UeaL9+Fv5C4gjmuP
-        04wVSELv+R8iFmdWEcb9nzQl7xhKbcEpkrNtthqKguXciEh5nKGGcWlwijyRJ4Q7zuq
-        x0URmyeyT86W+K3IriSHGCWNMNewRCY0yWwwxmvf7SUp8jll9iqPB/pZrk0OCqTdOWm
-        10BHL3YmYJv/4cohLwAu9XWfS5gW6HO3VhoG5RkHv+exXUXettntzRDB04g57qngrry
-        wR+E2OQzNFhYjBgT8QG+wwncuybqM24agwf1jFvfffi+ElnK1YiZ/eG4vTAH0VIZLIo
-        /fhGe/R2wC+NHCLJiOWA3mUgfcSVcUg3WTl5ar8F57SptEJe45sxvJdQwhJjTlwyUvx
-        cTWThJQsZuApgL2DPc7fKYAc5nSh7cXOmiU9JmXo+glEEn6zFm4qbqEoHIJeDjIxF8K
-        Tk/CBVefIkeYqSEjA12baPqBsbuuZ0mkVYCXFRelsWUE7IL18534NDOr0HQnegcEF11
-        7FM97ZxSrN70rMerHRCd0I9xjYPdfxmTbD84jEfSwFRVZvVT0drBtt853ALxR3ytVDl
-        hS7EcXyuUfA6X6fbjM7EllczFonGF6gQpi38sFBCgpAHFuhXe+lB55T1ChgTGnNyDN3
-        RSfPAppJIXRhQ=
-    - BUILD_REGION="us-east-2"
-    - DEPLOY_REGIONS="us-east-1,us-west-1,us-west-2"
-    # - IMAGE_VERSION=
-    - PACKER_VERSION="1.4.1"
+    # AWS_ACCESS_KEY_ID
+    - secure: "jgVYFUvaYPanAFYWvfdWXo/HzcIqUiDZ8O8K0SNgvCqtEwd+NDmPf97\
+    KyVg7xfGVinBVLN2gi0iGvp/SrspKy+2ad3x21JBkdbscWQifLqKm3b4NBp6OWCZQs\
+    zPLfLs6smFpyvccd11UfoZ046rinBG9APCJpVFYjwaDqyCu8344y1761g+pHJjP/7u\
+    NwX26izLRtaOAXJJ+QydOJ5GpS2jUnDc1p9R04rJmS0UO7SrTeR9lFrkSRg80o80Dt\
+    tvuGSyBeUh7K4beLFOP19nL//uprkK611aFpb8zI+FAp0RslL+YBb8+xwb7fInFUoI\
+    JFAXFc2ZUrQ8QJ2W8LXCKERRA6DxDwgsTGHzzxyqNF+rrQO2gkZPgUs/+HhU6qYzrh\
+    O+UgspQjhexXFGl+7UFTkLgEmVaUqKb28xXb6nC/3Phuelwsu8yBOs9tRH8IjYZC6z\
+    kr5Lz8vpv2u7VHU5tn7jYUI5RWrSP/234qaKkmD9gXjw0jequdOmDQT0VcuWDinN5w\
+    tFoP4K83hW76AH2kx4ijjlVVh41vXl4WoqdTEZCrh0gTYZmflwK360CCUoTYj4IsVB\
+    T6VYn3Yj1lAEkvZfuqwABGkB3GslsyEFJB3q9+yQUUH150wF4rLnw+r8J3QbKJximf\
+    GlvjgMzHI9NcCX7JRnPxhkn2QoBuKJCcQY="
+    - AWS_DEFAULT_REGION="us-east-2"
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "T2DoaM0ft65k73Dg9HLOoBH0kCBpR9Uf1I41hIV1DuPD77Bagm3/gnc\
+    TeMrZiEGiOqwgZqNPv++vRV0ErImqw6zdAazBODdVJNii6p7D4WhvU8xWepH7J0t7t\
+    nyseK+cpAVtWjonvh7HAC4kEOPFTJqeiUjfE5RxEWIg1kLdJhvje017OEZCJ1aGxbI\
+    HlPXxGluL/XW8KDbSwxRho1hDs6FPdnS6q/O7gxLaH/RVCc1oeJXFi78pOZikSDGuZ\
+    arGZCZyR40eZNTmvwAHPQGb+m0Y1VuiBsVKliwBxa4Q/2N0uX1HBd6smLjF/E+G5o1\
+    y79S0V1EOlX5RKNk6SqYf6OMejNjlxLi6X79WXx6U/OQq1eJKzWnhfbmKRgHtbEsoL\
+    MY3yQdYSQj19ZoBI9q6+E/ErPaIWhRkB2n26Fb4YfuTGjGyTVwX5DmXVk/LorI3NNa\
+    OlTf2Y+PJmxOTO0kQ0Y0koZHJjVW4AnR+zTXvaZ5/wLWUwdBXaJhc95Dkp+tlv0g4R\
+    jbpfg/7L4Bl57W1K/dg+yB3qrmTDoxck40ZjeqsUxv7b6DPI4j950PPiA3Lk1FofPO\
+    CtBTm/+u12bXEqKzKP+nw1gGL7SmzwLRoRnV06WO6RVW4p7QcKS318DHrYbrwdfHtg\
+    ihzpjw+GWxDjcWrwoV2Acj5cTdZrVJ6dsw="
+    - PACKER_BUILD_REGION="us-east-2"
+    - PACKER_DEPLOY_REGIONS="us-east-1,us-west-1,us-west-2"
+    - PACKER_VERSION="1.4.2"
+    - TERRAFORM_VERSION="0.12.3"
 
 
 # Cache pip packages and pre-commit plugins to speed up builds
@@ -45,14 +44,21 @@ cache:
     - $HOME/.cache/pre-commit
 
 before_install:
-  # install packer.io
+  # Install terraform
+  - >
+    wget
+    https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+    -O /tmp/terraform.zip
+  - sudo unzip -d /opt/terraform /tmp/terraform.zip
+  - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
+  # install packer
   - curl --output /tmp/packer.zip --location
       "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
   - sudo unzip -o -d /usr/local/bin /tmp/packer.zip
 
 install:
   - pip install --upgrade --requirement requirements-test.txt
-  - export IMAGE_VERSION=$(./bump_version.sh show)
+  - export PACKER_IMAGE_VERSION=$(./bump_version.sh show)
   - eval $(./update_env.py)
   # install roles
   - ansible-galaxy install --force --role-file src/requirements.yml
@@ -68,9 +74,3 @@ deploy:
     script: packer build --timestamp-ui src/packer.json
     on:
       tags: true
-  # # create a testing image
-  # - provider: script
-  #   script: export IMAGE_VERSION=${IMAGE_VERSION}-pre &&
-  #     packer build src/packer.json
-  #   on:
-  #     tags: false

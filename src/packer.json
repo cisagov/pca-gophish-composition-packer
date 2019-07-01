@@ -1,13 +1,12 @@
 {
   "builders": [
     {
-      "access_key": "{{user `aws_access_key`}}",
       "ami_block_device_mappings": [
         {
           "delete_on_termination": true,
           "device_name": "xvda",
           "encrypted": true,
-          "volume_size": 10,
+          "volume_size": 8,
           "volume_type": "gp2"
         }
       ],
@@ -19,12 +18,11 @@
           "delete_on_termination": true,
           "device_name": "xvda",
           "encrypted": true,
-          "volume_size": 10,
+          "volume_size": 8,
           "volume_type": "gp2"
         }
       ],
       "region": "{{user `build_region`}}",
-      "secret_key": "{{user `aws_secret_key`}}",
       "source_ami_filter": {
         "filters": {
           "name": "debian-stretch-hvm-x86_64-gp2-*",
@@ -58,17 +56,12 @@
       "type": "ansible"
     }
   ],
-  "sensitive-variables": [
-    "aws_access_key",
-    "aws_secret_key"
-  ],
+  "sensitive-variables": [],
   "variables": {
-    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
-    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
-    "build_region": "{{env `BUILD_REGION`}}",
-    "deploy_regions": "{{env `DEPLOY_REGIONS`}}",
-    "image_version": "{{env `IMAGE_VERSION`}}",
-    "pre_release": "{{env `PRE_RELEASE`}}",
+    "build_region": "{{env `PACKER_BUILD_REGION`}}",
+    "deploy_regions": "{{env `PACKER_DEPLOY_REGIONS`}}",
+    "image_version": "{{env `PACKER_IMAGE_VERSION`}}",
+    "pre_release": "{{env `PACKER_PRE_RELEASE`}}",
     "travis_job_web_url": "{{env `TRAVIS_JOB_WEB_URL`}}"
   }
 }
