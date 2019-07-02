@@ -31,6 +31,18 @@ env:
     4SlrMLA/vrasKkRzn8Y7YBTurCBychkonFe1bBfLkAikG/RrL6+oqmK6qJz7QF2DfgR\
     D06VRI+21wFa3Raikv6O4AEcd+MFjNpLdqrVortNj3V3ufHvHfxKgS8souPmfW1rLcF\
     Z9xhv7GQ6S00KGjI3u2JtkLU="
+    # GITHUB_ACCESS_TOKEN
+    - secure: "AIve2BptbZX6Nhcs9c9ACRfKxZJqqkK9q0X7ZhJaNv+QWbNEr1KP1azY\
+    WcsROUV5FRyTprqhYdpSuM7CMwtVMwvMoCfm9EbIF5z+UrngkYD8lRr6Yf8OXLhAqz2\
+    nleK01KgYmon6E8ryyd3K3kBSyzvW2kwePPsUUge+Qtas1HDKRmLZNGkqu/ISqTxgHj\
+    HkMByfExVWjneKD76uObQu+gF+SfTBNmDpIqj1RiKTp2qgcU47z8vsUG/DaOMNLpUXG\
+    MeTmad2GFgYUMru6NdrMFNSuaC808esVq+PpkIVA98Uw1XyCTXmeyulwJlHAe0Wc2c+\
+    BgAE6K+PdQ3Zd7Y3JkDeijIzHHaVWr6/v3hPCrVCsZWeW0tce4Ae1tSRPgRiCon0Pbs\
+    Fedexg9jLXHt8oF6ffCJBqwGBwQU8gfQEUyMmccgYU/2WVIL1+CbnwG7oMK6UZRThQJ\
+    fYAz6hcPHPsODh0bv1NNx1ZELkG5SvBud26OF4XbldOaYzWmw4phIjEKj3y2EFT7TwB\
+    0c9KeYGSEkUs2Xb3Lgme9rcMiL2sXYMxRW2KdP7+1xIjcuskOJi2P/6fHcA1cK++s3z\
+    iDSDHYPKra3ebebVTl74MJr+dHrun4o8k+stvKgsEqxGVYJXYG5R1PCtWPw51JTs9Vy\
+    XFeSaVYPYu1lvBX6Sd8IJX1o="
     - PACKER_BUILD_REGION="us-east-2"
     - PACKER_DEPLOY_REGIONS="us-east-1,us-west-1,us-west-2"
     - PACKER_VERSION="1.4.2"
@@ -59,11 +71,11 @@ before_install:
 install:
   - pip install --upgrade --requirement requirements-test.txt
   - export PACKER_IMAGE_VERSION=$(./bump_version.sh show)
-  - eval $(./update_env.py)
   # install roles
   - ansible-galaxy install --force --role-file src/requirements.yml
 
 script:
+  - eval $(./update_env.py)
   - pre-commit run --all-files
   - packer validate src/packer.json
   - pytest
