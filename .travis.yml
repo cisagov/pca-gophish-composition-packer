@@ -54,19 +54,22 @@ cache:
   pip: true
   directories:
     - $HOME/.cache/pre-commit
+    - $HOME/.cache/curl
 
 before_install:
+  # make a cache directory for curl downloads
+  - mkdir -p $HOME/.cache/curl
   # Install terraform
-  - >
-    wget
-    https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-    -O /tmp/terraform.zip
-  - sudo unzip -d /opt/terraform /tmp/terraform.zip
+  - curl --output $HOME/.cache/curl/terraform.zip
+      --time-cond $HOME/.cache/curl/terraform.zip --location
+      "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+  - sudo unzip -d /opt/terraform $HOME/.cache/curl/terraform.zip
   - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
   # install packer
-  - curl --output /tmp/packer.zip --location
+  - curl --output $HOME/.cache/curl/packer.zip
+      --time-cond $HOME/.cache/curl/packer.zip --location
       "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
-  - sudo unzip -o -d /usr/local/bin /tmp/packer.zip
+  - sudo unzip -o -d /usr/local/bin $HOME/.cache/curl/packer.zip
 
 install:
   - pip install --upgrade --requirement requirements-test.txt
@@ -76,6 +79,7 @@ install:
 
 script:
   - eval $(./update_env.py)
+  - source shell_helpers.sh
   - pre-commit run --all-files
   - packer validate src/packer.json
   - pytest
@@ -83,6 +87,6 @@ script:
 deploy:
   # create a production image
   - provider: script
-    script: packer build --timestamp-ui src/packer.json
+    script: cisa_wait 30 packer build --timestamp-ui src/packer.json
     on:
       tags: true
