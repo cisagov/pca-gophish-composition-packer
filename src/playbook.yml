@@ -20,6 +20,13 @@
     - nvme
 
 - hosts: all
+  name: Install VNC server
+  become: yes
+  become_method: sudo
+  roles:
+    - vnc_server
+
+- hosts: all
   name: Install PCA GoPhish Docker composition
   become: yes
   become_method: sudo
