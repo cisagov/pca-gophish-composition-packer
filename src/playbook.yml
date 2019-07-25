@@ -34,6 +34,26 @@
     - pca_gophish_composition
 
 - hosts: all
+  name: Add VNC user to docker group
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Add VNC user to docker group
+      user:
+        name: "{{ lookup('aws_ssm', '/vnc/username') }}"
+        groups: docker
+        append: yes
+
+- hosts: all
+  name: Install Chromium web browser
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install Chromium web browser
+      package:
+        name: chromium
+
+- hosts: all
   name: Start up GoPhish Docker composition
   become: yes
   become_method: sudo
