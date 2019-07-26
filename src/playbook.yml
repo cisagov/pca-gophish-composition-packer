@@ -61,3 +61,33 @@
     - name: Start up GoPhish Docker composition
       docker_compose:
         project_src: /var/pca/pca-gophish-composition
+
+- hosts: all
+  name: Wait for GoPhish admin server to start up
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Wait for GoPhish admin port to be open
+      wait_for:
+        port: 3333
+
+- hosts: all
+  name: Get GoPhish API key
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Get GoPhish API key
+      command: /usr/local/bin/docker-compose exec -T gophish get-api-key
+      args:
+        chdir: /var/pca/pca-gophish-composition
+      register: gophish_api_key
+      changed_when: false
+
+- hosts: all
+  name: Execute gophish-init
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Execute gophish-init
+      command: /usr/local/bin/gophish-init {{ gophish_api_key.stdout }}
+      changed_when: false
