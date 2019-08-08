@@ -34,6 +34,18 @@
     - pca_gophish_composition
 
 - hosts: all
+  name: Change GoPhish published port from 3380 to 80
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Change GoPhish published port from 3380 to 80
+      lineinfile:
+        path: /var/pca/pca-gophish-composition/docker-compose.yml
+        regexp: "published: 3380$"
+        line: "        published: 80"
+        state: present
+
+- hosts: all
   name: Add VNC user to docker group
   become: yes
   become_method: sudo
