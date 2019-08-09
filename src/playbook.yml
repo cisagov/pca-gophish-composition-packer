@@ -75,40 +75,45 @@
         dest: /var/pca/pca-gophish-composition/docker-compose.production.yml
 
 - hosts: all
-  name: Start up GoPhish Docker composition
+  name: Install systemd service file for pca-gophish-composition
   become: yes
   become_method: sudo
   tasks:
-    - name: Start up GoPhish Docker composition
-      docker_compose:
-        project_src: /var/pca/pca-gophish-composition
+    - name: Install systemd service file for pca-gophish-composition
+      copy:
+        src: pca-gophish-composition.service
+        dest: /etc/systemd/system/pca-gophish-composition.service
 
 - hosts: all
-  name: Wait for GoPhish admin server to start up
+  name: Systemd daemon-reload
   become: yes
   become_method: sudo
   tasks:
-    - name: Wait for GoPhish admin port to be open
-      wait_for:
-        port: 3333
+    - name: Systemd daemon-reload
+      systemd:
+        daemon_reload: true
+      when:
+        - ansible_service_mgr == "systemd"
 
 - hosts: all
-  name: Get GoPhish API key
+  name: Systemd daemon-reload
   become: yes
   become_method: sudo
   tasks:
-    - name: Get GoPhish API key
-      command: /usr/local/bin/docker-compose exec -T gophish get-api-key
-      args:
-        chdir: /var/pca/pca-gophish-composition
-      register: gophish_api_key
-      changed_when: false
+    - name: Enable pca-gophish-composition systemd service to start on boot
+      systemd:
+        name: pca-gophish-composition.service
+        enabled: true
+      when:
+        - ansible_service_mgr == "systemd"
 
 - hosts: all
-  name: Execute gophish-init
+  name: Add VNC user to docker group
   become: yes
   become_method: sudo
   tasks:
-    - name: Execute gophish-init
-      command: /usr/local/bin/gophish-init {{ gophish_api_key.stdout }}
-      changed_when: false
+    - name: Add VNC user to docker group
+      user:
+        name: "{{ lookup('aws_ssm', '/vnc/username') }}"
+        groups: docker
+        append: yes

@@ -1,0 +1,20 @@
+[Unit]
+Description=Docker composition for GoPhish and friends
+After=docker.service network.target multi-user.target cloud-final.service
+Requires=docker.service
+RequiresMountsFor=/var/pca/pca-gophish-composition/data
+AssertPathIsMountPoint=/var/pca/pca-gophish-composition/data
+
+[Service]
+Restart=always
+# Stop containers (if running) when unit is stopped
+ExecStartPre=/usr/local/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-compose.yml -f /var/pca/pca-gophish-composition/docker-compose.production.yml down
+# Start containers when unit is started
+ExecStart=/usr/local/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-compose.yml -f /var/pca/pca-gophish-composition/docker-compose.production.yml up
+# Stop container when unit is stopped
+ExecStop=/usr/local/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-compose.yml -f /var/pca/pca-gophish-composition/docker-compose.production.yml down
+# Run gophish-init script after containers are started
+ExecStartPost=/bin/sh -c "cd /var/pca/pca-gophish-composition && while ! (/usr/local/bin/docker-compose logs gophish | /bin/grep 'Starting admin server' > /dev/null); do sleep 1; /bin/echo 'Waiting for gophish startup...'; done && /usr/local/bin/docker-compose exec -T gophish get-api-key | /usr/bin/xargs /usr/local/bin/gophish-init"
+
+[Install]
+WantedBy=multi-user.target
