@@ -43,6 +43,16 @@
     - pca_gophish_composition
 
 - hosts: all
+  name: Create mount point for GoPhish persistent data volume
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Create mount point for GoPhish persistent data volume
+      file:
+        path: /var/pca/pca-gophish-composition/data
+        state: directory
+
+- hosts: all
   name: Change GoPhish published port from 3380 to 80
   become: yes
   become_method: sudo
@@ -55,24 +65,14 @@
         state: present
 
 - hosts: all
-  name: Add VNC user to docker group
+  name: Copy docker-compose.production.yml to pca-gophish-composition dir
   become: yes
   become_method: sudo
   tasks:
-    - name: Add VNC user to docker group
-      user:
-        name: "{{ lookup('aws_ssm', '/vnc/username') }}"
-        groups: docker
-        append: yes
-
-- hosts: all
-  name: Install Chromium web browser
-  become: yes
-  become_method: sudo
-  tasks:
-    - name: Install Chromium web browser
-      package:
-        name: chromium
+    - name: Copy docker-compose.production.yml to pca-gophish-composition dir
+      copy:
+        src: docker-compose.production.yml
+        dest: /var/pca/pca-gophish-composition/docker-compose.production.yml
 
 - hosts: all
   name: Start up GoPhish Docker composition
