@@ -27,6 +27,15 @@
     - vnc_server
 
 - hosts: all
+  name: Install Chromium web browser
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install Chromium web browser
+      package:
+        name: chromium
+
+- hosts: all
   name: Install PCA GoPhish Docker composition
   become: yes
   become_method: sudo
