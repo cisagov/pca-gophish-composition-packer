@@ -43,63 +43,40 @@
     - pca_gophish_composition
 
 - hosts: all
-  name: Create mount point for GoPhish persistent data volume
+  vars:
+    pca_gophish_composition_path: "/var/pca/pca-gophish-composition"
+  name: Configure GoPhish Docker composition
   become: yes
   become_method: sudo
   tasks:
     - name: Create mount point for GoPhish persistent data volume
       file:
-        path: /var/pca/pca-gophish-composition/data
+        path: "{{ pca_gophish_composition_path }}/data"
         state: directory
 
-- hosts: all
-  name: Change GoPhish published port from 3380 to 80
-  become: yes
-  become_method: sudo
-  tasks:
     - name: Change GoPhish published port from 3380 to 80
       lineinfile:
-        path: /var/pca/pca-gophish-composition/docker-compose.yml
+        path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
         regexp: "published: 3380$"
         line: "        published: 80"
         state: present
 
-- hosts: all
-  name: Copy docker-compose.production.yml to pca-gophish-composition dir
-  become: yes
-  become_method: sudo
-  tasks:
     - name: Copy docker-compose.production.yml to pca-gophish-composition dir
       copy:
         src: docker-compose.production.yml
-        dest: /var/pca/pca-gophish-composition/docker-compose.production.yml
+        dest: "{{ pca_gophish_composition_path }}/docker-compose.production.yml"
 
-- hosts: all
-  name: Install systemd service file for pca-gophish-composition
-  become: yes
-  become_method: sudo
-  tasks:
     - name: Install systemd service file for pca-gophish-composition
       copy:
         src: pca-gophish-composition.service
         dest: /etc/systemd/system/pca-gophish-composition.service
 
-- hosts: all
-  name: Systemd daemon-reload
-  become: yes
-  become_method: sudo
-  tasks:
-    - name: Systemd daemon-reload
+    - name: Reload systemd daemon
       systemd:
         daemon_reload: true
       when:
         - ansible_service_mgr == "systemd"
 
-- hosts: all
-  name: Systemd daemon-reload
-  become: yes
-  become_method: sudo
-  tasks:
     - name: Enable pca-gophish-composition systemd service to start on boot
       systemd:
         name: pca-gophish-composition.service
@@ -108,12 +85,49 @@
         - ansible_service_mgr == "systemd"
 
 - hosts: all
-  name: Add VNC user to docker group
+  name: Configure VNC user
+  vars:
+    vnc_username: "{{ lookup('aws_ssm', '/vnc/username') }}"
+    vnc_ssh_public_key: "{{ lookup('aws_ssm', '/vnc/ssh/rsa_public_key') }}"
+    vnc_ssh_private_key: "{{ lookup('aws_ssm', '/vnc/ssh/rsa_private_key') }}"
   become: yes
   become_method: sudo
   tasks:
     - name: Add VNC user to docker group
       user:
-        name: "{{ lookup('aws_ssm', '/vnc/username') }}"
+        name: "{{ vnc_username }}"
         groups: docker
         append: yes
+
+    - name: Create .ssh directory for VNC user
+      file:
+        path: "/home/{{ vnc_username }}/.ssh"
+        state: directory
+        owner: "{{ vnc_username }}"
+        group: "{{ vnc_username }}"
+        mode: 0755
+
+    # Install SSH keypair for VNC user; this will enable Guacamole to perform
+    # file transfers to/from this instance
+    # NOTE: Guacamole (v.1.0.0) currently only supports RSA keys
+    - name: Install SSH public key for VNC user
+      copy:
+        content: "{{ vnc_ssh_public_key }}"
+        dest: "/home/{{ vnc_username }}/.ssh/id_rsa.pub"
+        mode: 0644
+        owner: "{{ vnc_username }}"
+        group: "{{ vnc_username }}"
+
+    - name: Install SSH private key for VNC user
+      copy:
+        content: "{{ vnc_ssh_private_key }}"
+        dest: "/home/{{ vnc_username }}/.ssh/id_rsa"
+        mode: 0600
+        owner: "{{ vnc_username }}"
+        group: "{{ vnc_username }}"
+      no_log: true
+
+    - name: Add VNC SSH public key as authorized key
+      authorized_key:
+        user: "{{ vnc_username }}"
+        key: "{{ vnc_ssh_public_key }}"
