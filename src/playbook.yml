@@ -49,11 +49,16 @@
   become: yes
   become_method: sudo
   tasks:
+    - name: Create a gophish group with the same GID as inside gophish-docker
+      group:
+        name: gophish
+        gid: 421
+        system: yes
+
     - name: Create mount point for GoPhish persistent data volume
       file:
         path: "{{ pca_gophish_composition_path }}/data"
         state: directory
-        mode: 0777
 
     - name: Change GoPhish published port from 3380 to 80
       lineinfile:
