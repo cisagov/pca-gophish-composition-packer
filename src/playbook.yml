@@ -46,22 +46,22 @@
   become: yes
   become_method: sudo
   tasks:
-    - name: Install VNC systemd service file with SecurityType VncAuth
-      template:
-        src: vncserver@.service
-        dest: /lib/systemd/system/
-        mode: 0644
+    - name: Set up VNC systemd service
+      block:
+        - name: Install VNC systemd service file with SecurityType VncAuth
+          template:
+            src: vncserver@.service
+            dest: /lib/systemd/system/
+            mode: 0644
 
-    - name: Systemd daemon-reload
-      systemd:
-        daemon_reload: true
-      when:
-        - ansible_service_mgr == "systemd"
+        - name: Systemd daemon-reload
+          systemd:
+            daemon_reload: true
 
-    - name: Restart VNC systemd service
-      systemd:
-        name: "vncserver@1.service"
-        state: restarted
+        - name: Restart VNC systemd service
+          systemd:
+            name: "vncserver@1.service"
+            state: restarted
       when:
         - ansible_service_mgr == "systemd"
 
