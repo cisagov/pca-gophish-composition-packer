@@ -26,6 +26,45 @@
   roles:
     - vnc_server
 
+# Guacamole prefers to connect to the VNC server with TLSVnc security,
+# however that resulted in frequent disconnections of the VNC session with
+# errors like the following (from /home/vnc/.vnc/ip-*:1.log):
+#    Connections: closed: 10.10.50.20::53496
+#                 (readTLS: (unknown error code) (384))
+#     TLS:         TLS session wasn't terminated gracefully
+# The root cause may be: https://issues.apache.org/jira/browse/GUACAMOLE-414
+# However, the fix for that issue has not yet made it's way to the official
+# Guacamole docker image, which is what we use.
+# Until that happens, our workaround is to force the VNC server to not accept
+# authentication via TLS ("TLSVnc"), and only accept "VncAuth".  This is
+# accomplished by adding "-SecurityType VncAuth" as a startup parameter to
+# vncserver in the systemd service file.
+- hosts: all
+  name: Configure VNC service
+  vars:
+    vnc_username: "{{ lookup('aws_ssm', '/vnc/username') }}"
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install VNC systemd service file with SecurityType VncAuth
+      template:
+        src: vncserver@.service
+        dest: /lib/systemd/system/
+        mode: 0644
+
+    - name: Systemd daemon-reload
+      systemd:
+        daemon_reload: true
+      when:
+        - ansible_service_mgr == "systemd"
+
+    - name: Restart VNC systemd service
+      systemd:
+        name: "vncserver@1.service"
+        state: restarted
+      when:
+        - ansible_service_mgr == "systemd"
+
 - hosts: all
   name: Install Chromium web browser
   become: yes
