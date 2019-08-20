@@ -39,6 +39,9 @@
 # authentication via TLS ("TLSVnc"), and only accept "VncAuth".  This is
 # accomplished by adding "-SecurityType VncAuth" as a startup parameter to
 # vncserver in the systemd service file.
+#
+# Reminder to get rid of this in the future:
+#   https://github.com/cisagov/pca-gophish-composition-packer/issues/2
 - hosts: all
   name: Configure VNC service
   vars:
