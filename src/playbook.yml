@@ -111,21 +111,21 @@
         src: docker-compose.production.yml
         dest: "{{ pca_gophish_composition_path }}/docker-compose.production.yml"
 
-    - name: Install systemd service file for pca-gophish-composition
-      copy:
-        src: pca-gophish-composition.service
-        dest: /etc/systemd/system/pca-gophish-composition.service
+    - name: Set up pca-gophish-composition systemd service
+      block:
+        - name: Install systemd service file for pca-gophish-composition
+          copy:
+            src: pca-gophish-composition.service
+            dest: /etc/systemd/system/pca-gophish-composition.service
 
-    - name: Reload systemd daemon
-      systemd:
-        daemon_reload: true
-      when:
-        - ansible_service_mgr == "systemd"
+        - name: Reload systemd daemon
+          systemd:
+            daemon_reload: true
 
-    - name: Enable pca-gophish-composition systemd service to start on boot
-      systemd:
-        name: pca-gophish-composition.service
-        enabled: true
+        - name: Enable pca-gophish-composition systemd service to start on boot
+          systemd:
+            name: pca-gophish-composition.service
+            enabled: true
       when:
         - ansible_service_mgr == "systemd"
 
