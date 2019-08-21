@@ -26,6 +26,54 @@
   roles:
     - vnc_server
 
+# Guacamole prefers to connect to the VNC server with TLSVnc security,
+# however that resulted in frequent disconnections of the VNC session with
+# errors like the following (from /home/vnc/.vnc/ip-*:1.log):
+#    Connections: closed: 10.10.50.20::53496
+#                 (readTLS: (unknown error code) (384))
+#     TLS:         TLS session wasn't terminated gracefully
+# The root cause may be: https://issues.apache.org/jira/browse/GUACAMOLE-414
+# However, the fix for that issue has not yet made it's way to the official
+# Guacamole docker image, which is what we use.
+# Until that happens, our workaround is to force the VNC server to not accept
+# authentication via TLS ("TLSVnc"), and only accept "VncAuth".  This is
+# accomplished by adding "-SecurityType VncAuth" as a startup parameter to
+# vncserver in the systemd service file.
+#
+# Reminder to get rid of this in the future:
+#   https://github.com/cisagov/pca-gophish-composition-packer/issues/2
+- hosts: all
+  name: Configure VNC service
+  vars:
+    vnc_username: "{{ lookup('aws_ssm', '/vnc/username') }}"
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Set up VNC systemd service
+      block:
+        - name: Remove SecurityTypes (if any) from VNC systemd service file
+          replace:
+            path: /lib/systemd/system/vncserver@.service
+            regexp: "(^ExecStart=.*)-SecurityTypes[ ][\\w, ]+(.*)"
+            replace: \1\2
+
+        - name: Add SecurityTypes VncAuth to VNC systemd service file
+          replace:
+            path: /lib/systemd/system/vncserver@.service
+            regexp: "(^ExecStart=.*)"
+            replace: \1 -SecurityTypes VncAuth
+
+        - name: Systemd daemon-reload
+          systemd:
+            daemon_reload: true
+
+        - name: Restart VNC systemd service
+          systemd:
+            name: "vncserver@1.service"
+            state: restarted
+      when:
+        - ansible_service_mgr == "systemd"
+
 - hosts: all
   name: Install Chromium web browser
   become: yes
@@ -72,21 +120,21 @@
         src: docker-compose.production.yml
         dest: "{{ pca_gophish_composition_path }}/docker-compose.production.yml"
 
-    - name: Install systemd service file for pca-gophish-composition
-      copy:
-        src: pca-gophish-composition.service
-        dest: /etc/systemd/system/pca-gophish-composition.service
+    - name: Set up pca-gophish-composition systemd service
+      block:
+        - name: Install systemd service file for pca-gophish-composition
+          copy:
+            src: pca-gophish-composition.service
+            dest: /etc/systemd/system/pca-gophish-composition.service
 
-    - name: Reload systemd daemon
-      systemd:
-        daemon_reload: true
-      when:
-        - ansible_service_mgr == "systemd"
+        - name: Reload systemd daemon
+          systemd:
+            daemon_reload: true
 
-    - name: Enable pca-gophish-composition systemd service to start on boot
-      systemd:
-        name: pca-gophish-composition.service
-        enabled: true
+        - name: Enable pca-gophish-composition systemd service to start on boot
+          systemd:
+            name: pca-gophish-composition.service
+            enabled: true
       when:
         - ansible_service_mgr == "systemd"
 
