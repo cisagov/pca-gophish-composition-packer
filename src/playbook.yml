@@ -51,11 +51,17 @@
   tasks:
     - name: Set up VNC systemd service
       block:
-        - name: Install VNC systemd service file with SecurityType VncAuth
-          template:
-            src: vncserver@.service
-            dest: /lib/systemd/system/
-            mode: 0644
+        - name: Remove SecurityTypes (if any) from VNC systemd service file
+          replace:
+            path: /lib/systemd/system/vncserver@.service
+            regexp: "(^ExecStart=.*)-SecurityTypes[ ][\\w, ]+(.*)"
+            replace: \1\2
+
+        - name: Add SecurityTypes VncAuth to VNC systemd service file
+          replace:
+            path: /lib/systemd/system/vncserver@.service
+            regexp: "(^ExecStart=.*)"
+            replace: \1 -SecurityTypes VncAuth
 
         - name: Systemd daemon-reload
           systemd:
