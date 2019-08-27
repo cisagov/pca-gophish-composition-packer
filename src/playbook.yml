@@ -75,13 +75,16 @@
         - ansible_service_mgr == "systemd"
 
 - hosts: all
-  name: Install Chromium web browser
+  name: Install web browser and text editor
   become: yes
   become_method: sudo
   tasks:
     - name: Install Chromium web browser
       package:
         name: chromium
+    - name: Install bluefish text editor
+      package:
+        name: bluefish
 
 - hosts: all
   name: Install PCA GoPhish Docker composition
