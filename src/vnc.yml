@@ -31,7 +31,4 @@
         append: yes
         groups:
           - wheel
-        name: "{{ username }}"
-  vars:
-    # The username for the VNC user
-    username: "{{ lookup('aws_ssm', '/vnc/username') }}"
+        name: "{{ lookup('aws_ssm', '/vnc/username') }}"
