@@ -1,0 +1,55 @@
+---
+- hosts: all
+  name: Install PCA GoPhish Docker composition
+  become: yes
+  become_method: sudo
+  roles:
+    - pca_gophish_composition
+
+- hosts: all
+  vars:
+    pca_gophish_composition_path: "/var/pca/pca-gophish-composition"
+  name: Configure GoPhish Docker composition
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Create a gophish group with the same GID as inside gophish-docker
+      group:
+        name: gophish
+        gid: 421
+        system: yes
+
+    - name: Create mount point for GoPhish persistent data volume
+      file:
+        path: "{{ pca_gophish_composition_path }}/data"
+        state: directory
+
+    - name: Change GoPhish published port from 3380 to 80
+      lineinfile:
+        path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
+        regexp: "published: 3380$"
+        line: "        published: 80"
+        state: present
+
+    - name: Copy docker-compose.production.yml to pca-gophish-composition dir
+      copy:
+        src: docker-compose.production.yml
+        dest: "{{ pca_gophish_composition_path }}/docker-compose.production.yml"
+
+    - name: Set up pca-gophish-composition systemd service
+      block:
+        - name: Install systemd service file for pca-gophish-composition
+          copy:
+            src: pca-gophish-composition.service
+            dest: /etc/systemd/system/pca-gophish-composition.service
+
+        - name: Reload systemd daemon
+          systemd:
+            daemon_reload: true
+
+        - name: Enable pca-gophish-composition systemd service to start on boot
+          systemd:
+            name: pca-gophish-composition.service
+            enabled: true
+      when:
+        - ansible_service_mgr == "systemd"
