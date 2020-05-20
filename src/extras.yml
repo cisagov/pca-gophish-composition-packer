@@ -1,0 +1,12 @@
+---
+- hosts: all
+  name: Install extra software requested by PCA team
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install Firefox web browser
+      package:
+        name: firefox-esr
+    - name: Install bluefish text editor
+      package:
+        name: bluefish
