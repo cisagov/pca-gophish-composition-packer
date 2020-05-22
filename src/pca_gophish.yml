@@ -53,3 +53,25 @@
             enabled: true
       when:
         - ansible_service_mgr == "systemd"
+
+- hosts: all
+  name: Create GoPhish desktop shortcut for VNC user
+  become: yes
+  become_method: sudo
+  vars:
+    vnc_username: "{{ lookup('aws_ssm', '/vnc/username') }}"
+  tasks:
+    - name: Create VNC user Desktop directory
+      file:
+        path: "/home/{{ vnc_username }}/Desktop"
+        state: directory
+        mode: 0755
+        owner: "{{ vnc_username }}"
+        group: "{{ vnc_username }}"
+    - name: Create GoPhish desktop shortcut for VNC user
+      copy:
+        src: gophish-shortcut.desktop
+        dest: "/home/{{ vnc_username }}/Desktop/gophish-shortcut.desktop"
+        mode: 0755
+        owner: "{{ vnc_username }}"
+        group: "{{ vnc_username }}"
