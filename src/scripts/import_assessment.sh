@@ -57,7 +57,8 @@ for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE"); do
 
   end_date_in_at_format=$(date -d "$end_date" +"%Y%m%d%H%M.%S")
 
-  echo "$COMPLETE_CAMPAIGN_SCRIPT $campaign_name" | at -M -t "$end_date_in_at_format"
+  echo "$COMPLETE_CAMPAIGN_SCRIPT $campaign_name" | \
+    at -M -t "$end_date_in_at_format"
   schedule_rc="$?"
   if [ "$schedule_rc" -eq 0 ]
   then

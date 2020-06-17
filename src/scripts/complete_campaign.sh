@@ -31,7 +31,8 @@ fi
 
 # Run gophish-complete in the Docker composition
 docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
-  gophish-tools gophish-complete "--auto=$CAMPAIGN_ID" "$GOPHISH_URL" "$API_KEY"
+  gophish-tools gophish-complete "--campaign=$CAMPAIGN_ID" \
+    "$GOPHISH_URL" "$API_KEY"
 complete_rc="$?"
 if [ "$complete_rc" -eq 0 ]
 then
