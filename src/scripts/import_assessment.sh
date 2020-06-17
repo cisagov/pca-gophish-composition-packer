@@ -34,7 +34,7 @@ fi
 
 # Run gophish-import in the Docker composition
 docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
-  --volume "$ASSESSMENT_FILE_DIR":/home/pca gophish-tools \
+  --volume "$ASSESSMENT_FILE_DIR":/home/cisa gophish-tools \
   gophish-import "$ASSESSMENT_FILE_BASE" "$GOPHISH_URL" "$API_KEY"
 import_rc="$?"
 if [ "$import_rc" -eq 0 ]

@@ -32,7 +32,7 @@ fi
 
 # Run gophish-export in the Docker composition
 docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
-  --volume "$GOPHISH_WRITABLE_DIR":/home/pca \
+  --volume "$GOPHISH_WRITABLE_DIR":/home/cisa \
   gophish-tools gophish-export "$ASSESSMENT_ID" "$GOPHISH_URL" "$API_KEY"
 export_rc="$?"
 if [ "$export_rc" -eq 0 ]
