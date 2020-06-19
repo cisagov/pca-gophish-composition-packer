@@ -14,23 +14,17 @@ then
     exit 255
 fi
 
+# Source common variables and functions
+SCRIPTS_DIR=$(readlink -f "$0" | xargs dirname)
+# shellcheck source=src/scripts/gophish_common.sh
+source "$SCRIPTS_DIR/gophish_common.sh"
+
 ASSESSMENT_FILE=$1
 ASSESSMENT_FILE_BASE=$(basename "$ASSESSMENT_FILE")
 ASSESSMENT_FILE_DIR=$(readlink -f "$ASSESSMENT_FILE" | xargs dirname)
 
-GOPHISH_COMPOSITION="/var/pca/pca-gophish-composition/docker-compose.yml"
-GOPHISH_URL="https://gophish:3333"
-COMPLETE_CAMPAIGN_SCRIPT="/var/pca/pca-gophish-composition/src/scripts/complete_campaign.sh"
-
 # Fetch GoPhish API key
-API_KEY=$(docker-compose -f "$GOPHISH_COMPOSITION" exec -T gophish get-api-key)
-api_key_rc="$?"
-if [ "$api_key_rc" -ne 0 ]
-then
-  echo "ERROR: Failed to obtain GoPhish API key from Docker composition."
-  echo "Exiting without importing."
-  exit 1
-fi
+API_KEY=$(get_gophish_api_key)
 
 # Run gophish-import in the Docker composition
 docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
@@ -54,7 +48,7 @@ for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE"); do
 
   end_date_in_at_format=$(date -d "$end_date" +"%Y%m%d%H%M.%S")
 
-  echo "$COMPLETE_CAMPAIGN_SCRIPT $campaign_name" | \
+  echo "$SCRIPTS_DIR/complete_campaign.sh $campaign_name" | \
     at -M -t "$end_date_in_at_format"
   schedule_rc="$?"
   if [ "$schedule_rc" -eq 0 ]

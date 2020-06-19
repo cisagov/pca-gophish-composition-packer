@@ -14,20 +14,15 @@ then
     exit 255
 fi
 
+# Source common variables and functions
+SCRIPTS_DIR=$(readlink -f "$0" | xargs dirname)
+# shellcheck source=src/scripts/gophish_common.sh
+source "$SCRIPTS_DIR/gophish_common.sh"
+
 ASSESSMENT_ID=$1
 
-GOPHISH_COMPOSITION="/var/pca/pca-gophish-composition/docker-compose.yml"
-GOPHISH_URL="https://gophish:3333"
-
 # Fetch GoPhish API key
-API_KEY=$(docker-compose -f "$GOPHISH_COMPOSITION" exec -T gophish get-api-key)
-api_key_rc="$?"
-if [ "$api_key_rc" -ne 0 ]
-then
-  echo "ERROR: Failed to obtain GoPhish API key from Docker composition."
-  echo "Exiting without importing."
-  exit 1
-fi
+API_KEY=$(get_gophish_api_key)
 
 # Run gophish-test in the Docker composition
 docker-compose -f "$GOPHISH_COMPOSITION" run --rm \
