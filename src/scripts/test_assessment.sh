@@ -5,6 +5,7 @@
 # This script simplifies the process of sending test emails for an
 # assessment in the GoPhish server running in the local Docker composition.
 
+set -o errexit
 set -o nounset
 set -o pipefail
 
@@ -20,6 +21,10 @@ SCRIPTS_DIR=$(readlink -f "$0" | xargs dirname)
 source "$SCRIPTS_DIR/gophish_common.sh"
 
 ASSESSMENT_ID=$1
+
+# Disable errexit to allow error-handling within get_gophish_api_key
+# and for the subsequent docker-compose call to gophish-test
+set +o errexit
 
 # Fetch GoPhish API key
 API_KEY=$(get_gophish_api_key)

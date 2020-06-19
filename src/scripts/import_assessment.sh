@@ -5,6 +5,7 @@
 # This script simplifies the process of importing an assessment JSON file
 # into the GoPhish server running in the local Docker composition.
 
+set -o errexit
 set -o nounset
 set -o pipefail
 
@@ -23,6 +24,10 @@ ASSESSMENT_FILE=$1
 ASSESSMENT_FILE_BASE=$(basename "$ASSESSMENT_FILE")
 ASSESSMENT_FILE_DIR=$(readlink -f "$ASSESSMENT_FILE" | xargs dirname)
 
+# Disable errexit to allow error-handling within get_gophish_api_key
+# and for the subsequent docker-compose call to gophish-import
+set +o errexit
+
 # Fetch GoPhish API key
 API_KEY=$(get_gophish_api_key)
 
@@ -39,6 +44,7 @@ else
   echo "ERROR: Assessment import from $ASSESSMENT_FILE failed!"
   exit $import_rc
 fi
+set -o errexit
 
 # Schedule each campaign to be completed at the specified time
 # via the "at" command
@@ -48,6 +54,8 @@ for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE"); do
 
   end_date_in_at_format=$(date -d "$end_date" +"%Y%m%d%H%M.%S")
 
+  # Disable errexit to allow error-handling of next command
+  set +o errexit
   echo "$SCRIPTS_DIR/complete_campaign.sh $campaign_name" | \
     at -M -t "$end_date_in_at_format"
   schedule_rc="$?"
@@ -58,5 +66,6 @@ for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE"); do
     echo "ERROR: Failed to schedule campaign $campaign_name to complete at $end_date!"
     exit $schedule_rc
   fi
+  set -o errexit
 done
 echo "All campaigns successfully scheduled for completion."

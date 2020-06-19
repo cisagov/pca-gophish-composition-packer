@@ -5,6 +5,7 @@
 # This script simplifies the process of exporting assessment data from the
 # GoPhish server running in the local Docker composition to a JSON file.
 
+set -o errexit
 set -o nounset
 set -o pipefail
 
@@ -22,6 +23,10 @@ source "$SCRIPTS_DIR/gophish_common.sh"
 ASSESSMENT_ID=$1
 
 GOPHISH_WRITABLE_DIR="/var/pca/pca-gophish-composition/data"
+
+# Disable errexit to allow error-handling within get_gophish_api_key
+# and for the subsequent docker-compose call to gophish-export
+set +o errexit
 
 # Fetch GoPhish API key
 API_KEY=$(get_gophish_api_key)
