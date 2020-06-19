@@ -48,7 +48,8 @@ set -o errexit
 
 # Schedule each campaign to be completed at the specified time
 # via the "at" command
-for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE"); do
+for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE")
+do
   campaign_name=$(jq -r ".campaigns[$campaign].name" "$ASSESSMENT_FILE")
   end_date=$(jq -r ".campaigns[$campaign].complete_date" "$ASSESSMENT_FILE")
 
