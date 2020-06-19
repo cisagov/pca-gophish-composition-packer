@@ -46,9 +46,6 @@ else
   exit $import_rc
 fi
 
-# TODO - REMOVE THIS TEMP HACK
-ASSESSMENT_FILE="$1.json"
-
 # Schedule each campaign to be completed at the specified time
 # via the "at" command
 for campaign in $(jq '.campaigns | keys | .[]' "$ASSESSMENT_FILE"); do
