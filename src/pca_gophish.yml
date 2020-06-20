@@ -54,6 +54,12 @@
       when:
         - ansible_service_mgr == "systemd"
 
+    - name: Copy gophish-tools helper scripts
+      copy:
+        src: scripts/
+        dest: "{{ pca_gophish_composition_path }}/gophish-tools"
+        mode: 0755
+
 - hosts: all
   name: Create GoPhish desktop shortcut for VNC user
   become: yes
