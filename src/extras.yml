@@ -14,3 +14,17 @@
     - name: Install Firefox web browser
       package:
         name: firefox-esr
+
+# Add VNC user to docker group so that PCA operators can successfully
+# execute docker-compose commands.
+- hosts: all
+  name: Add VNC user to docker group
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Add VNC user to docker group
+      user:
+        append: yes
+        groups:
+          - docker
+        name: "{{ lookup('aws_ssm', '/vnc/username') }}"
