@@ -6,8 +6,9 @@
   tasks:
     - name: Install utilities used by gophish-tools helper scripts
       package:
-        - at
-        - jq
+        name:
+          - at
+          - jq
     - name: Install bluefish text editor
       package:
         name: bluefish
