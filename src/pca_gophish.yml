@@ -21,7 +21,7 @@
 
     - name: Create mount point for GoPhish persistent data volume
       file:
-        mode: 0644
+        mode: 0755
         path: "{{ pca_gophish_composition_path }}/data"
         state: directory
 
