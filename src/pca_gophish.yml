@@ -27,7 +27,6 @@
 
     - name: Change GoPhish published port from 3380 to 80
       lineinfile:
-        mode: 0644
         path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
         regexp: "published: 3380$"
         line: "        published: 80"
