@@ -3,7 +3,7 @@
 # These owners will be the default owners for everything in the
 # repo. Unless a later match takes precedence, these owners will be
 # requested for review when someone opens a pull request.
-* @dav3r @felddy
+* @dav3r @felddy @jsf9k
 
 # Let jsf9k own the sometimes-touchy AWS and Python playbooks.
 /src/aws.yml @jsf9k
@@ -11,3 +11,7 @@
 
 # Let dav3r and jsf9k share ownership of packer.json.
 /src/packer.json @dav3r @jsf9k
+
+# These folks own any files in the .github directory at the root of
+# the repository and any of its subdirectories.
+/.github/ @dav3r @felddy @hillaryj @jsf9k @mcdonnnj
