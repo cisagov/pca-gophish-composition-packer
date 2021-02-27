@@ -1,18 +1,18 @@
 ---
 - name: Import base image playbook
-  import_playbook: base.yml
+  ansible.builtin.import_playbook: base.yml
 
 - name: Import VNC playbook
-  import_playbook: vnc.yml
+  ansible.builtin.import_playbook: vnc.yml
 
 - name: Import PCA GoPhish composition playbook
-  import_playbook: pca_gophish.yml
+  ansible.builtin.import_playbook: pca_gophish.yml
 
 - name: Import extras playbook
-  import_playbook: extras.yml
+  ansible.builtin.import_playbook: extras.yml
 
 - name: Import cloud-init playbook
-  import_playbook: cloud_init.yml
+  ansible.builtin.import_playbook: cloud_init.yml
 
 - name: Import AWS playbook
-  import_playbook: aws.yml
+  ansible.builtin.import_playbook: aws.yml
