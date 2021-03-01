@@ -33,7 +33,7 @@
             mode: 0644
             src: docker-compose.production.yml
             dest: >
-              "{{ pca_gophish_composition_path }}/docker-compose.production.yml"
+              {{ pca_gophish_composition_path }}/docker-compose.production.yml
         - name: Set up pca-gophish-composition systemd service
           block:
             - name: Install systemd service file for pca-gophish-composition
