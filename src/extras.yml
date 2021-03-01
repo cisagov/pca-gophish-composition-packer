@@ -1,25 +1,18 @@
 ---
 - hosts: all
-  name: Install extra software used by PCA team
+  name: Various extras to configure the environment to the PCA team's liking
   become: yes
   become_method: sudo
   tasks:
-    - name: Install bluefish text editor
-      package:
-        name: bluefish
-    - name: Install Firefox web browser
-      package:
-        name: firefox-esr
-
-# Add VNC user to docker group so that PCA operators can successfully
-# execute docker-compose commands.
-- hosts: all
-  name: Add VNC user to docker group
-  become: yes
-  become_method: sudo
-  tasks:
+    - name: Install extra software used by the PCA team
+      ansible.builtin.package:
+        name:
+          - bluefish
+          - firefox-esr
+    # Add VNC user to docker group so that PCA operators can
+    # successfully execute docker-compose commands.
     - name: Add VNC user to docker group
-      user:
+      ansible.builtin.user:
         append: yes
         groups:
           - docker
