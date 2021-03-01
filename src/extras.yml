@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  name: Various extras to configure the environment to the by PCA team's liking
+  name: Various extras to configure the environment to the PCA team's liking
   become: yes
   become_method: sudo
   tasks:
