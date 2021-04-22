@@ -10,11 +10,10 @@
     # exim4 mail transfer agent (MTA) to avoid any conflicts with
     # SMTP ports 25 and 587.
     - name: Stop and disable exim4 service
-      ansible.builtin.systemd:
+      ansible.builtin.service:
         enabled: false
         name: exim4.service
         state: stopped
-      when: ansible_service_mgr == "systemd"
     - name: Uninstall exim4 packages
       ansible.builtin.apt:
         # Use "autoremove" to get rid of any exim4 dependencies
