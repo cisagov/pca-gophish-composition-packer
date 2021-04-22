@@ -5,3 +5,18 @@ services:
   gophish:
     volumes:
       - "/var/pca/pca-gophish-composition/data:/home/cisa/data"
+
+  postfix:
+    ports:
+      - target: "25"
+        published: "25"
+        protocol: tcp
+        mode: host
+      - target: "587"
+        published: "587"
+        protocol: tcp
+        mode: host
+      - target: "993"
+        published: "993"
+        protocol: tcp
+        mode: host
