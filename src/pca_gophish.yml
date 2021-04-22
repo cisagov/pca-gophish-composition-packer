@@ -6,6 +6,20 @@
   roles:
     - pca_gophish_composition
   tasks:
+    # Since we are using postfix (inside Docker), we first remove the
+    # exim4 mail transfer agent (MTA) to avoid any conflicts with
+    # SMTP ports 25 and 587.
+    - name: Stop and disable exim4 service
+      ansible.builtin.systemd:
+        enabled: false
+        name: exim4.service
+        state: stopped
+      when: ansible_service_mgr == "systemd"
+    - name: Uninstall exim4 packages
+      ansible.builtin.apt:
+        autoremove: yes
+        name: exim4*
+        state: absent
     # Currently, the latest available version of docker-compose on Debian
     # Buster is 1.21.0 (see
     # https://packages.debian.org/source/buster/docker-compose).
