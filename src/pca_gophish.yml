@@ -17,6 +17,8 @@
       when: ansible_service_mgr == "systemd"
     - name: Uninstall exim4 packages
       ansible.builtin.apt:
+        # Use "autoremove" to get rid of any exim4 dependencies
+        # that are no longer needed
         autoremove: yes
         name: exim4*
         state: absent
