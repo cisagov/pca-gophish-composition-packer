@@ -48,6 +48,32 @@
             regexp: "published: 3380$"
             line: "        published: 80"
             state: present
+        # I was hoping to override the default published postfix ports for
+        # target (internal container) ports 25 and 587 by including our
+        # preferred published ports in docker-compose.production.yml.
+        # However, when Docker Compose merges the contents of the default
+        # docker-compose.yml with the contents of
+        # docker-compose.production.yml, it does not intelligently overwrite
+        # the published ports.  For example, instead of having target
+        # port 25 published to only host port 25 (as specified in
+        # docker-compose.production.yml), we end up with target port 25
+        # published to BOTH host port 25 (from docker-compose.production.yml)
+        # and host port 1025 (from docker-compose.yml).
+        # That is why the next step removes the default published ports from
+        # docker-compose.yml so that only the ports specified in
+        # docker-compose.production.yml will be published.
+        - name: Remove default postfix published ports
+          ansible.builtin.replace:
+            path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
+            regexp: "^\\s*ports:\\s*$\n\
+            ^\\s*-\\s*target:\\s*['\"]25['\"]\\s*$\n\
+            ^\\s*published:\\s*['\"]1025['\"]\\s*$\n\
+            ^\\s*protocol:\\s*tcp\\s*$\n\
+            ^\\s*mode:\\s*host\\s*$\n\
+            ^\\s*-\\s* target:\\s*['\"]587['\"]\\s*$\n\
+            ^\\s*published:\\s*['\"]1587['\"]\\s*$\n\
+            ^\\s*protocol:\\s*tcp\\s*$\n\
+            ^\\s*mode:\\s*host\\s*$\n"
         - name: >
             Copy docker-compose.production.yml to pca-gophish-composition
             dir
