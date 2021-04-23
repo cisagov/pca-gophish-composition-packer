@@ -62,6 +62,10 @@
         # That is why the next step removes the default published ports from
         # docker-compose.yml so that only the ports specified in
         # docker-compose.production.yml will be published.
+        #
+        # TODO: Due to the extreme ugliness of the following regex,
+        # https://github.com/cisagov/pca-gophish-composition-packer/issues/42
+        # was created to find a cleaner solution to this problem.
         - name: Remove default postfix published ports
           ansible.builtin.replace:
             path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
