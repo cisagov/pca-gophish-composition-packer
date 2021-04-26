@@ -71,6 +71,12 @@
             src: docker-compose.production.yml
             dest: >-
               {{ pca_gophish_composition_path }}/docker-compose.production.yml
+        - name: Copy postfix users file to composition secrets directory
+          ansible.builtin.copy:
+            mode: 0644
+            src: postfix-users.txt
+            dest: >-
+              {{ pca_gophish_composition_path }}/secrets/postfix/users.txt
         - name: Set up pca-gophish-composition systemd service
           block:
             - name: Install systemd service file for pca-gophish-composition
