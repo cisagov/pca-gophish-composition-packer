@@ -1,15 +1,17 @@
 ---
 - hosts: all
-  name: Various extras to configure the environment to the PCA team's liking
+  name: Various extras to configure the environment for operators
   become: yes
   become_method: sudo
   tasks:
-    - name: Install extra software used by the PCA team
+    - name: Install extra software used by operators
       ansible.builtin.package:
         name:
           - bluefish
+          - dnsutils
           - firefox-esr
-    # Add VNC user to docker group so that PCA operators can
+          - thunderbird
+    # Add VNC user to docker group so that operators can
     # successfully execute docker-compose commands.
     - name: Add VNC user to docker group
       ansible.builtin.user:
