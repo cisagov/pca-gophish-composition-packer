@@ -21,28 +21,6 @@
         autoremove: yes
         name: exim4*
         state: absent
-    # Currently, the latest available version of docker-compose on Debian
-    # Buster is 1.21.0 (see
-    # https://packages.debian.org/source/buster/docker-compose).
-    # Unfortunately, the pca-gophish Docker composition requires version 3.7
-    # of the docker-compose file format, which is supported by docker-compose
-    # 1.22.0 and later.  To work around that, we create a virtualenv and
-    # install docker-compose via pip, which gives us a newer version that
-    # supports file format 3.7.
-    # TODO Remove virtualenv steps below when docker-compose >= 1.22.0
-    # becomes available for this image via the package manager.
-    # TODO Update all of the docker-compose paths in
-    # "pca-gophish-composition.service" once the virtualenv has been removed.
-    - name: Install virtualenv
-      ansible.builtin.package:
-        name:
-          - virtualenv
-    - name: Create virtualenv and install docker-compose
-      ansible.builtin.pip:
-        chdir: "{{ pca_gophish_composition_path }}"
-        name: docker-compose
-        virtualenv: "{{ pca_gophish_composition_path }}/venv"
-        virtualenv_python: python3
     - name: Configure PCA GoPhish Docker composition
       block:
         - name: >
