@@ -7,13 +7,13 @@ AssertPathIsMountPoint=/var/pca/pca-gophish-composition/data
 
 [Service]
 Restart=always
-# Stop containers (if running) when unit is stopped
+# Stop composition (if running) before unit is started
 ExecStartPre=/usr/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-compose.yml -f /var/pca/pca-gophish-composition/docker-compose.production.yml down
-# Start containers when unit is started
+# Start composition when unit is started
 ExecStart=/usr/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-compose.yml -f /var/pca/pca-gophish-composition/docker-compose.production.yml up
-# Stop container when unit is stopped
+# Stop composition when unit is stopped
 ExecStop=/usr/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-compose.yml -f /var/pca/pca-gophish-composition/docker-compose.production.yml down
-# Run gophish-init script after containers are started
+# Run gophish-init script after gophish service starts up in composition
 ExecStartPost=/bin/sh -c "cd /var/pca/pca-gophish-composition && while ! (/usr/bin/docker-compose logs gophish | /bin/grep 'Starting admin server' > /dev/null); do sleep 1; /bin/echo 'Waiting for gophish startup...'; done && /usr/bin/docker-compose exec -T gophish get-api-key | /usr/bin/xargs /usr/local/bin/gophish-init"
 
 [Install]
