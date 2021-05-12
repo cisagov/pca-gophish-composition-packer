@@ -9,4 +9,8 @@
 mailarchive
 
 # Custom users
+admin
 assessment
+contact
+info
+noreply
