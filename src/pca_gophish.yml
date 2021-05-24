@@ -6,6 +6,23 @@
   roles:
     - pca_gophish_composition
   tasks:
+    # We use cloud-init scripts in cisagov/cool-assessment-terraform to
+    # set Docker's backing file system to a persistent volume.  It would
+    # cause problems if the Docker service were to start before cloud-init
+    # finished, so we modify the Docker unit file to wait until cloud-final
+    # has completed.
+    - name: Ensure Docker starts after cloud-final has completed
+      ansible.builtin.lineinfile:
+        path: /lib/systemd/system/docker.service
+        backrefs: yes
+        # The exclamation mark forces us to quote the string because
+        # it is a special character in YAML.
+        #
+        # The (?!...) jazz is a negative look-ahead assertion.  See
+        # here, for example:
+        # https://docs.python.org/3/library/re.html
+        regexp: '^After=(.*)(?! cloud\-final\.service)$'
+        line: After=\1 cloud-final.service
     # Since we are using postfix (inside Docker), we first remove the
     # exim4 mail transfer agent (MTA) to avoid any conflicts with
     # SMTP ports 25 and 587.
