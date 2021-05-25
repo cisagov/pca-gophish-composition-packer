@@ -10,8 +10,9 @@
     # set Docker's backing file system to a persistent volume.  It would
     # cause problems if the Docker service were to start before cloud-init
     # finished, so we modify the Docker unit file to wait until cloud-final
-    # has completed.
-    - name: Ensure Docker starts after cloud-final has completed
+    # has completed.  We include multi-user.service in here also to avoid
+    # a systemd dependency cycle.
+    - name: Ensure Docker starts after multi-user and cloud-final complete
       ansible.builtin.lineinfile:
         path: /lib/systemd/system/docker.service
         backrefs: yes
@@ -21,8 +22,8 @@
         # The (?!...) jazz is a negative look-ahead assertion.  See
         # here, for example:
         # https://docs.python.org/3/library/re.html
-        regexp: '^After=(.*)(?! cloud\-final\.service)$'
-        line: After=\1 cloud-final.service
+        regexp: '^After=(.*)(?! multi\-user\.target cloud\-final\.service)$'
+        line: After=\1 multi-user.target cloud-final.service
     # Since we are using postfix (inside Docker), we first remove the
     # exim4 mail transfer agent (MTA) to avoid any conflicts with
     # SMTP ports 25 and 587.
