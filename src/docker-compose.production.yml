@@ -20,3 +20,10 @@ services:
         published: "993"
         protocol: tcp
         mode: host
+    volumes:
+      - postfix-etc:/etc
+      - postfix-root:/root
+
+volumes:
+  postfix-etc:
+  postfix-root:
