@@ -6,6 +6,10 @@
   roles:
     - pca_gophish_composition
   tasks:
+    - name: Install python3-boto3, used by cloud-init scripts
+      ansible.builtin.package:
+        name:
+          - python3-boto3
     # We use cloud-init scripts in cisagov/cool-assessment-terraform to
     # set Docker's backing file system to a persistent volume.  It would
     # cause problems if the Docker service were to start before cloud-init
