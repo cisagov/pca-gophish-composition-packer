@@ -22,8 +22,12 @@ services:
         mode: host
     volumes:
       - postfix-etc:/etc
+      - postfix-home:/home
       - postfix-root:/root
+      - postfix-var:/var
 
 volumes:
   postfix-etc:
+  postfix-home:
   postfix-root:
+  postfix-var:
