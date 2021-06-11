@@ -9,6 +9,7 @@ module "iam_user" {
     aws.images-staging-ssm    = aws.images-staging-ssm
   }
 
+<<<<<<< HEAD
   ssm_parameters = [
     "/cyhy/dev/users",
     "/ssh/public_keys/*",
@@ -22,4 +23,8 @@ module "iam_user" {
     Team        = "CISA - Development"
     Application = "pca-gophish-composition-packer"
   }
+=======
+  ssm_parameters = ["/cyhy/dev/users", "/ssh/public_keys/*"]
+  user_name      = "build-skeleton-packer"
+>>>>>>> f97a650e0734fff44ba882aae5f6e0282865696a
 }
