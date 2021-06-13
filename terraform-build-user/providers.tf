@@ -10,7 +10,7 @@ locals {
 
   tags = {
     Team        = "CISA - Development"
-    Application = "skeleton-packer"
+    Application = "pca-gophish-composition-packer"
   }
 }
 
