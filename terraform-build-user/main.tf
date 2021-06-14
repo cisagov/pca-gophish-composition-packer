@@ -18,8 +18,4 @@ module "iam_user" {
     "/vnc/ssh/rsa_private_key",
   ]
   user_name = "build-pca-gophish-composition-packer"
-  tags = {
-    Team        = "CISA - Development"
-    Application = "pca-gophish-composition-packer"
-  }
 }
