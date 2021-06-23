@@ -52,11 +52,6 @@
             name: gophish
             gid: 421
             system: yes
-        - name: Create mount point for GoPhish persistent data volume
-          ansible.builtin.file:
-            mode: 0755
-            path: "{{ pca_gophish_composition_path }}/data"
-            state: directory
         - name: Change GoPhish published port from 3380 to 80
           ansible.builtin.lineinfile:
             path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
