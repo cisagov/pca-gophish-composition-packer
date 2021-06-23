@@ -2,8 +2,8 @@
 Description=Docker composition for GoPhish and friends
 After=docker.service network.target multi-user.target cloud-final.service
 Requires=docker.service
-RequiresMountsFor=/var/pca/pca-gophish-composition/data
-AssertPathIsMountPoint=/var/pca/pca-gophish-composition/data
+RequiresMountsFor=/docker_data
+AssertPathIsMountPoint=/docker_data
 
 [Service]
 Restart=always
