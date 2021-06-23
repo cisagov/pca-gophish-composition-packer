@@ -4,7 +4,7 @@ version: '3.7'
 services:
   gophish:
     volumes:
-      - "/var/pca/pca-gophish-composition/data:/home/cisa/data"
+      - gophish-home:/home/cisa
 
   postfix:
     ports:
@@ -27,6 +27,7 @@ services:
       - postfix-var:/var
 
 volumes:
+  gophish-home:
   postfix-etc:
   postfix-home:
   postfix-root:
