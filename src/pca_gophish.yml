@@ -49,7 +49,7 @@
             Create a gophish group with the same GID as inside
             gophish-docker
           ansible.builtin.group:
-            name: gophish
+            name: "{{ gophish_group }}"
             gid: 421
             system: yes
         - name: Change GoPhish published port from 3380 to 80
@@ -136,7 +136,7 @@
           # sticky bit so that future content in the directory will also be
           # owned by the gophish group
           ansible.builtin.file:
-            group: gophish
+            group: "{{ gophish_group }}"
             mode: 02775
             owner: "{{ vnc_username }}"
             path: /home/{{ vnc_username }}/PCA/{{ item }}
@@ -161,5 +161,6 @@
             owner: "{{ vnc_username }}"
             group: "{{ vnc_username }}"
   vars:
+    gophish_group: gophish
     pca_gophish_composition_path: /var/pca/pca-gophish-composition
     vnc_username: "{{ lookup('aws_ssm', '/vnc/username') }}"
