@@ -120,6 +120,30 @@
                 enabled: true
           when:
             - ansible_service_mgr == "systemd"
+    - name: Create standard directories used by PCA operators
+      block:
+        - name: Create data directories
+          ansible.builtin.file:
+            group: "{{ vnc_username }}"
+            mode: 0755
+            owner: "{{ vnc_username }}"
+            path: /home/{{ vnc_username }}/PCA/Level-{{ item }}/Data
+            state: directory
+            # range is exclusive of end point
+          loop: "{{ range(1, 7)|list }}"
+        - name: Create Gophish-writable directories
+          # Give full permissions to the gophish group and set the group
+          # sticky bit so that future content in the directory will also be
+          # owned by the gophish group
+          ansible.builtin.file:
+            group: gophish
+            mode: 02775
+            owner: "{{ vnc_username }}"
+            path: /home/{{ vnc_username }}/PCA/{{ item }}
+            state: directory
+          loop:
+            - Email_Targets
+            - Email_Templates
     - name: Create GoPhish desktop shortcut for VNC user
       block:
         - name: Create VNC user Desktop directory
