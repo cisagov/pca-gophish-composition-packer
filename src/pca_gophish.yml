@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  name: Install and configure PCA GoPhish Docker composition
+  name: Install and configure PCA Gophish Docker composition
   become: yes
   become_method: sudo
   roles:
@@ -43,7 +43,7 @@
         autoremove: yes
         name: exim4*
         state: absent
-    - name: Configure PCA GoPhish Docker composition
+    - name: Configure PCA Gophish Docker composition
       block:
         - name: >
             Create a gophish group with the same GID as inside
@@ -52,7 +52,7 @@
             name: "{{ gophish_group }}"
             gid: 421
             system: yes
-        - name: Change GoPhish published port from 3380 to 80
+        - name: Change Gophish published port from 3380 to 80
           ansible.builtin.lineinfile:
             path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
             regexp: "published: 3380$"
@@ -144,7 +144,7 @@
           loop:
             - Email_Targets
             - Email_Templates
-    - name: Create GoPhish desktop shortcut for VNC user
+    - name: Create Gophish desktop shortcut for VNC user
       block:
         - name: Create VNC user Desktop directory
           ansible.builtin.file:
@@ -153,7 +153,7 @@
             mode: 0755
             owner: "{{ vnc_username }}"
             group: "{{ vnc_username }}"
-        - name: Create GoPhish desktop shortcut for VNC user
+        - name: Create Gophish desktop shortcut for VNC user
           ansible.builtin.copy:
             src: gophish-shortcut.desktop
             dest: /home/{{ vnc_username }}/Desktop/gophish-shortcut.desktop

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=1.0
 Type=Link
-Name=GoPhish - Login
+Name=Gophish - Login
 Icon=user-bookmarks
 URL=https://localhost:3333/login?next%2F
