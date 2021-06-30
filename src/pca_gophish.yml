@@ -130,7 +130,10 @@
             path: /home/{{ vnc_username }}/PCA/Level-{{ item }}/Data
             state: directory
             # range is exclusive of end point
-          loop: "{{ range(1, 7)|list }}"
+          loop: "{{ range(1, pca_num_levels + 1)|list }}"
+          vars:
+            # The standard number of phishing campaign levels in a PCA
+            pca_num_levels: 6
         - name: Create Gophish-writable directories
           # Give full permissions to the gophish group and set the group
           # sticky bit so that future content in the directory will also be
