@@ -5,7 +5,7 @@
 - name: Import VNC playbook
   ansible.builtin.import_playbook: vnc.yml
 
-- name: Import PCA GoPhish composition playbook
+- name: Import PCA Gophish composition playbook
   ansible.builtin.import_playbook: pca_gophish.yml
 
 - name: Import extras playbook

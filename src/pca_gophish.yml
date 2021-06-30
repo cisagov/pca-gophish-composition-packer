@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  name: Install and configure PCA GoPhish Docker composition
+  name: Install and configure PCA Gophish Docker composition
   become: yes
   become_method: sudo
   roles:
@@ -43,16 +43,16 @@
         autoremove: yes
         name: exim4*
         state: absent
-    - name: Configure PCA GoPhish Docker composition
+    - name: Configure PCA Gophish Docker composition
       block:
         - name: >
             Create a gophish group with the same GID as inside
             gophish-docker
           ansible.builtin.group:
-            name: gophish
+            name: "{{ gophish_group }}"
             gid: 421
             system: yes
-        - name: Change GoPhish published port from 3380 to 80
+        - name: Change Gophish published port from 3380 to 80
           ansible.builtin.lineinfile:
             path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
             regexp: "published: 3380$"
@@ -120,7 +120,34 @@
                 enabled: true
           when:
             - ansible_service_mgr == "systemd"
-    - name: Create GoPhish desktop shortcut for VNC user
+    - name: Create standard directories used by PCA operators
+      block:
+        - name: Create data directories
+          ansible.builtin.file:
+            group: "{{ vnc_username }}"
+            mode: 0755
+            owner: "{{ vnc_username }}"
+            path: /home/{{ vnc_username }}/PCA/Level-{{ item }}/Data
+            state: directory
+            # range is exclusive of end point
+          loop: "{{ range(1, pca_num_levels + 1)|list }}"
+          vars:
+            # The standard number of phishing campaign levels in a PCA
+            pca_num_levels: 6
+        - name: Create Gophish-writable directories
+          # Give full permissions to the gophish group and set the group
+          # sticky bit so that future content in the directory will also be
+          # owned by the gophish group
+          ansible.builtin.file:
+            group: "{{ gophish_group }}"
+            mode: 02775
+            owner: "{{ vnc_username }}"
+            path: /home/{{ vnc_username }}/PCA/{{ item }}
+            state: directory
+          loop:
+            - Email_Targets
+            - Email_Templates
+    - name: Create Gophish desktop shortcut for VNC user
       block:
         - name: Create VNC user Desktop directory
           ansible.builtin.file:
@@ -129,7 +156,7 @@
             mode: 0755
             owner: "{{ vnc_username }}"
             group: "{{ vnc_username }}"
-        - name: Create GoPhish desktop shortcut for VNC user
+        - name: Create Gophish desktop shortcut for VNC user
           ansible.builtin.copy:
             src: gophish-shortcut.desktop
             dest: /home/{{ vnc_username }}/Desktop/gophish-shortcut.desktop
@@ -137,5 +164,6 @@
             owner: "{{ vnc_username }}"
             group: "{{ vnc_username }}"
   vars:
+    gophish_group: gophish
     pca_gophish_composition_path: /var/pca/pca-gophish-composition
     vnc_username: "{{ lookup('aws_ssm', '/vnc/username') }}"
