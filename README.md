@@ -10,17 +10,17 @@ This project can be used to create images that include
 This project requires the following data to exist in your [AWS Systems
 Manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html):
 
-* `/cyhy/dev/users`: A comma-separated list of usernames of users that should
+- `/cyhy/dev/users`: A comma-separated list of usernames of users that should
   be allowed to SSH to the instance based on this image
-* `/ssh/public_keys/<username>`: The public SSH key of each user in the
+- `/ssh/public_keys/<username>`: The public SSH key of each user in the
   `/cyhy/dev/users` list
-* `/vnc/username`: The username of the Linux user that will be be used for
+- `/vnc/username`: The username of the Linux user that will be be used for
   VNC sessions
-* `/vnc/password`: The password to be used to connect to the VNC server that
+- `/vnc/password`: The password to be used to connect to the VNC server that
   resides on this image
-* `/vnc/ssh/rsa_public_key`: The public SSH key to be used by the Linux VNC
+- `/vnc/ssh/rsa_public_key`: The public SSH key to be used by the Linux VNC
   user
-* `/vnc/ssh/rsa_private_key`: The private SSH key to be used by the Linux VNC
+- `/vnc/ssh/rsa_private_key`: The private SSH key to be used by the Linux VNC
   user (needed if the VNC client (e.g.
   [Guacamole](https://github.com/cisagov/ansible-role-guacamole) attempts
   to do SFTP)
