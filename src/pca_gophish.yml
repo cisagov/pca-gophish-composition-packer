@@ -163,6 +163,14 @@
             mode: 0755
             owner: "{{ vnc_username }}"
             group: "{{ vnc_username }}"
+    # Add VNC user to docker group so that operators can successfully
+    # execute docker-compose commands.
+    - name: Add VNC user to docker group
+      ansible.builtin.user:
+        append: yes
+        groups:
+          - docker
+        name: "{{ lookup('aws_ssm', '/vnc/username') }}"
   vars:
     gophish_group: gophish
     pca_gophish_composition_path: /var/pca/pca-gophish-composition
