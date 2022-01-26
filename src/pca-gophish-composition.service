@@ -14,7 +14,7 @@ ExecStart=/usr/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-com
 # Stop composition when unit is stopped
 ExecStop=/usr/bin/docker-compose -f /var/pca/pca-gophish-composition/docker-compose.yml -f /var/pca/pca-gophish-composition/docker-compose.production.yml down
 # Run gophish-init script after gophish service starts up in composition
-ExecStartPost=/bin/sh -c "cd /var/pca/pca-gophish-composition && while ! (/usr/bin/docker-compose logs gophish | /bin/grep 'Starting admin server' > /dev/null); do sleep 1; /bin/echo 'Waiting for gophish startup...'; done && /usr/bin/docker-compose exec -T gophish get-api-key | /usr/bin/xargs /usr/local/bin/gophish-init"
+ExecStartPost=/bin/sh -c "cd /var/pca/pca-gophish-composition && while ! (/usr/bin/docker-compose logs gophish | /bin/grep 'Starting admin server' > /dev/null); do sleep 1; /bin/echo 'Waiting for gophish startup...'; done && /usr/bin/docker-compose exec -T gophish get-api-key | head -1 | /usr/bin/xargs /usr/local/bin/gophish-init"
 
 [Install]
 WantedBy=multi-user.target
