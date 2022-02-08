@@ -58,6 +58,12 @@
             regexp: "published: 3380$"
             line: "        published: 443"
             state: present
+        - name: Configure gophish to use TLS
+          ansible.builtin.replace:
+            path: >-
+              {{ pca_gophish_composition_path }}/secrets/gophish/config.json
+            regexp: '^(\s*"use_tls":\s*)false(\s*)$'
+            replace: '\1true'
         # I was hoping to override the default published postfix ports for
         # target (internal container) ports 25 and 587 by including our
         # preferred published ports in docker-compose.production.yml.
