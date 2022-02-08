@@ -52,11 +52,11 @@
             name: "{{ gophish_group }}"
             gid: 421
             system: yes
-        - name: Change Gophish published port from 3380 to 80
+        - name: Change Gophish published port from 3380 to 443
           ansible.builtin.lineinfile:
             path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
             regexp: "published: 3380$"
-            line: "        published: 80"
+            line: "        published: 443"
             state: present
         # I was hoping to override the default published postfix ports for
         # target (internal container) ports 25 and 587 by including our
