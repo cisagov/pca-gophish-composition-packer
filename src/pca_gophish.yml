@@ -80,12 +80,12 @@
           ansible.builtin.replace:
             path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
             regexp: "^\\s*ports:\\s*$\n\
-            ^\\s*-\\s*target:\\s*['\"]25['\"]\\s*$\n\
-            ^\\s*published:\\s*['\"]1025['\"]\\s*$\n\
+            ^\\s*-\\s*target:\\s*25\\s*$\n\
+            ^\\s*published:\\s*1025\\s*$\n\
             ^\\s*protocol:\\s*tcp\\s*$\n\
             ^\\s*mode:\\s*host\\s*$\n\
-            ^\\s*-\\s* target:\\s*['\"]587['\"]\\s*$\n\
-            ^\\s*published:\\s*['\"]1587['\"]\\s*$\n\
+            ^\\s*-\\s* target:\\s*587\\s*$\n\
+            ^\\s*published:\\s*1587\\s*$\n\
             ^\\s*protocol:\\s*tcp\\s*$\n\
             ^\\s*mode:\\s*host\\s*$\n"
         - name: >
