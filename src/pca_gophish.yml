@@ -58,7 +58,7 @@
             regexp: "published: 3380$"
             line: "        published: 443"
             state: present
-        - name: Configure gophish to use TLS
+        - name: Configure Gophish to use TLS
           ansible.builtin.replace:
             path: >-
               {{ pca_gophish_composition_path }}/secrets/gophish/config.json
