@@ -19,7 +19,6 @@
   name: nvme
 - src: https://github.com/cisagov/ansible-role-pca-gophish-composition
   name: pca_gophish_composition
-  version: use-nondefault-branch
 - src: https://github.com/cisagov/ansible-role-persist-journald
   name: persist_journald
 - src: https://github.com/cisagov/ansible-role-pip
