@@ -9,8 +9,8 @@
 /src/aws.yml @jsf9k
 /src/python.yml @jsf9k
 
-# Let dav3r and jsf9k share ownership of packer.json.
-/src/packer.json @dav3r @jsf9k
+# Let dav3r and jsf9k share ownership of packer.pkr.hcl.
+/src/packer.pkr.hcl @dav3r @jsf9k
 
 # These folks own any files in the .github directory at the root of
 # the repository and any of its subdirectories.
