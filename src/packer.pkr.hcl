@@ -53,7 +53,7 @@ data "amazon-ami" "debian_bullseye" {
     virtualization-type = "hvm"
   }
   most_recent = true
-  owners      = ["903794441882"]
+  owners      = ["136693071363"]
   region      = var.build_region
 }
 
