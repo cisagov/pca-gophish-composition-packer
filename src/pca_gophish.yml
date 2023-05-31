@@ -3,9 +3,10 @@
   name: Install and configure PCA Gophish Docker composition
   become: yes
   become_method: sudo
-  roles:
-    - pca_gophish_composition
   tasks:
+    - name: PCA Gophish Docker composition
+      ansible.builtin.include_role:
+        name: pca_gophish_composition
     - name: Install python3-boto3, used by cloud-init scripts
       ansible.builtin.package:
         name:
