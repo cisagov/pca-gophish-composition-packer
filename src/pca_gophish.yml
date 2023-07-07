@@ -2,7 +2,7 @@
 - hosts: all
   name: Install and configure PCA Gophish Docker composition
   become: yes
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   tasks:
     - name: PCA Gophish Docker composition
       ansible.builtin.include_role:
