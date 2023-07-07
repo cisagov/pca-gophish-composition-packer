@@ -110,6 +110,8 @@
             dest: >-
               {{ pca_gophish_composition_path }}/secrets/postfix/users.txt
         - name: Set up pca-gophish-composition systemd service
+          when:
+            - ansible_service_mgr == "systemd"
           block:
             - name: Install systemd service file for pca-gophish-composition
               ansible.builtin.copy:
@@ -125,8 +127,6 @@
               ansible.builtin.systemd:
                 name: pca-gophish-composition.service
                 enabled: true
-          when:
-            - ansible_service_mgr == "systemd"
     - name: Create standard directories used by PCA operators
       block:
         - name: Create data directories
