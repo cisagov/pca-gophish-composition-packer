@@ -1,7 +1,7 @@
 ---
 - hosts: all
   name: Install and configure PCA Gophish Docker composition
-  become: yes
+  become: true
   become_method: ansible.builtin.sudo
   tasks:
     - name: PCA Gophish Docker composition
@@ -20,7 +20,7 @@
     - name: Ensure Docker starts after multi-user and cloud-final complete
       ansible.builtin.lineinfile:
         path: /lib/systemd/system/docker.service
-        backrefs: yes
+        backrefs: true
         # The exclamation mark forces us to quote the string because
         # it is a special character in YAML.
         #
@@ -41,7 +41,7 @@
       ansible.builtin.apt:
         # Use "autoremove" to get rid of any exim4 dependencies
         # that are no longer needed
-        autoremove: yes
+        autoremove: true
         name: exim4*
         state: absent
     - name: Configure PCA Gophish Docker composition
@@ -52,7 +52,7 @@
           ansible.builtin.group:
             name: "{{ gophish_group }}"
             gid: 421
-            system: yes
+            system: true
         - name: Change Gophish published port from 3380 to 443
           ansible.builtin.lineinfile:
             path: "{{ pca_gophish_composition_path }}/docker-compose.yml"
@@ -174,7 +174,7 @@
     # execute docker compose commands.
     - name: Add VNC user to docker group
       ansible.builtin.user:
-        append: yes
+        append: true
         groups:
           - docker
         name: "{{ vnc_username }}"
