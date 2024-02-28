@@ -19,6 +19,7 @@
   src: https://github.com/cisagov/ansible-role-nvme
 - name: pca_gophish_composition
   src: https://github.com/cisagov/ansible-role-pca-gophish-composition
+  version: bugfix/broken-ci-on-kali
 - name: persist_journald
   src: https://github.com/cisagov/ansible-role-persist-journald
 - name: pip
