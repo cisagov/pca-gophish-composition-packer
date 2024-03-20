@@ -1,6 +1,6 @@
 ---
-- hosts: all
-  name: Various extras to configure the environment for operators
+- name: Various extras to configure the environment for operators
+  hosts: all
   become: true
   become_method: ansible.builtin.sudo
   tasks:

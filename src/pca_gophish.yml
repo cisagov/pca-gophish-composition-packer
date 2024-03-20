@@ -1,6 +1,6 @@
 ---
-- hosts: all
-  name: Install and configure PCA Gophish Docker composition
+- name: Install and configure PCA Gophish Docker composition
+  hosts: all
   become: true
   become_method: ansible.builtin.sudo
   tasks:
@@ -137,7 +137,7 @@
             path: /home/{{ vnc_username }}/PCA/Level-{{ item }}/Data
             state: directory
             # range is exclusive of end point
-          loop: "{{ range(1, pca_num_levels + 1)|list }}"
+          loop: "{{ range(1, pca_num_levels + 1) | list }}"
           vars:
             # The standard number of phishing campaign levels in a PCA
             pca_num_levels: 6
