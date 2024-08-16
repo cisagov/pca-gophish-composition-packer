@@ -44,7 +44,8 @@ jobs:
       fail-fast: false
       matrix:
         architecture:
-          - arm64
+          # The gophish-tools Docker image only supports x86_64.
+          # - arm64
           - x86_64
     steps:
       - id: harden-runner
