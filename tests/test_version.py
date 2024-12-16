@@ -1,4 +1,4 @@
-"""Version tests for pca-gophish-composition packer skeleton project."""
+"""Version tests for pca-gophish-composition-packer project."""
 
 # Standard Python Libraries
 import os
