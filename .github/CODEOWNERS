@@ -15,8 +15,8 @@
 /ansible/aws.yml @jsf9k
 /ansible/python.yml @jsf9k
 
-# Let dav3r, jasonodoom, jsf9k, and @mcdonnnj share ownership of packer.pkr.hcl.
-/src/packer.pkr.hcl @dav3r @jasonodoom @jsf9k @mcdonnnj
+# Let dav3r, jsf9k, and @mcdonnnj share ownership of packer.pkr.hcl.
+/src/packer.pkr.hcl @dav3r @jsf9k @mcdonnnj
 
 # These folks own all linting configuration files.
 /.ansible-lint @dav3r @felddy @jsf9k @mcdonnnj
