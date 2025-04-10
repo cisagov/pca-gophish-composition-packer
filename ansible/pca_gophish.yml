@@ -21,14 +21,19 @@
       ansible.builtin.lineinfile:
         path: /lib/systemd/system/docker.service
         backrefs: true
-        # The exclamation mark forces us to quote the string because
-        # it is a special character in YAML.
+        # The exclamation mark and backslash escapes force us to
+        # single-quote the string because the former is a special
+        # character in YAML and the latter should not be interpreted
+        # by YAML.
         #
         # The (?!...) jazz is a negative look-ahead assertion.  See
         # here, for example:
         # https://docs.python.org/3/library/re.html
+        #
+        # yamllint disable-line rule:quoted-strings
         regexp: '^After=(.*)(?! multi\-user\.target cloud\-final\.service)$'
-        line: After=\1 multi-user.target cloud-final.service
+        # yamllint disable-line rule:quoted-strings
+        line: 'After=\1 multi-user.target cloud-final.service'
     # Since we are using postfix (inside Docker), we first remove the
     # exim4 mail transfer agent (MTA) to avoid any conflicts with
     # SMTP ports 25 and 587.
@@ -63,7 +68,12 @@
           ansible.builtin.replace:
             path: >-
               {{ pca_gophish_composition_path }}/secrets/gophish/config.json
+            # The backslash escapes force us to single-quote the
+            # string because they should not be interpreted by YAML.
+            #
+            # yamllint disable-line rule:quoted-strings
             regexp: '^(\s*"use_tls":\s*)false\s*$'
+            # yamllint disable-line rule:quoted-strings
             replace: '\1true'
         # I was hoping to override the default published postfix ports for
         # target (internal container) ports 25 and 587 by including our
@@ -99,13 +109,13 @@
             Copy docker-compose.production.yml to pca-gophish-composition
             dir
           ansible.builtin.copy:
-            mode: 0644
+            mode: u=rw,g=r,o=r
             src: docker-compose.production.yml
             dest: >-
               {{ pca_gophish_composition_path }}/docker-compose.production.yml
         - name: Copy postfix users file to composition secrets directory
           ansible.builtin.copy:
-            mode: 0644
+            mode: u=rw,g=r,o=r
             src: postfix-users.txt
             dest: >-
               {{ pca_gophish_composition_path }}/secrets/postfix/users.txt
@@ -115,7 +125,7 @@
           block:
             - name: Install systemd service file for pca-gophish-composition
               ansible.builtin.copy:
-                mode: 0644
+                mode: u=rw,g=r,o=r
                 src: pca-gophish-composition.service
                 dest: /etc/systemd/system/pca-gophish-composition.service
             - name: Reload systemd daemon
@@ -132,7 +142,7 @@
         - name: Create data directories
           ansible.builtin.file:
             group: "{{ vnc_username }}"
-            mode: 0755
+            mode: u=rwx,g=rx,o=rx
             owner: "{{ vnc_username }}"
             path: /home/{{ vnc_username }}/PCA/Level-{{ item }}/Data
             state: directory
@@ -147,7 +157,7 @@
           # owned by the gophish group
           ansible.builtin.file:
             group: "{{ gophish_group }}"
-            mode: 02775
+            mode: u=rwx,g=rx,o=rx,g+t
             owner: "{{ vnc_username }}"
             path: /home/{{ vnc_username }}/PCA/{{ item }}
             state: directory
@@ -160,14 +170,14 @@
           ansible.builtin.file:
             path: /home/{{ vnc_username }}/Desktop
             state: directory
-            mode: 0755
+            mode: u=rwx,g=rx,o=rx
             owner: "{{ vnc_username }}"
             group: "{{ vnc_username }}"
         - name: Create Gophish desktop shortcut for VNC user
           ansible.builtin.copy:
             src: gophish-shortcut.desktop
             dest: /home/{{ vnc_username }}/Desktop/gophish-shortcut.desktop
-            mode: 0755
+            mode: u=rwx,g=rx,o=rx
             owner: "{{ vnc_username }}"
             group: "{{ vnc_username }}"
     # Add VNC user to docker group so that operators can successfully
