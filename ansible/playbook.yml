@@ -12,9 +12,6 @@
     configuration fix
   ansible.builtin.import_playbook: install-prerequisites-for-netplan-configuration-fix.yml
 
-- name: Import cloud-init playbook
-  ansible.builtin.import_playbook: cloud_init.yml
-
 # The AWS playbook must run before this one, since this playbook uses
 # a user group created in the AWS playbook.
 - name: Import VNC playbook
