@@ -1,3 +1,6 @@
+# TODO: Upgrade these base AMIs to Debian Trixie when possible.  See
+# cisagov/ansible-role-pca-gophish-composition#63 for an explanation
+# as to how to do this.
 data "amazon-ami" "debian_bookworm_arm64" {
   filters = {
     architecture        = "arm64"
