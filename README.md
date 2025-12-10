@@ -1,6 +1,8 @@
 # pca-gophish-composition-packer #
 
 [![GitHub Build Status](https://github.com/cisagov/pca-gophish-composition-packer/workflows/build/badge.svg)](https://github.com/cisagov/pca-gophish-composition-packer/actions)
+[![License](https://img.shields.io/github/license/cisagov/pca-gophish-composition-packer)](https://spdx.org/licenses/)
+[![CodeQL](https://github.com/cisagov/pca-gophish-composition-packer/workflows/CodeQL/badge.svg)](https://github.com/cisagov/pca-gophish-composition-packer/actions/workflows/codeql-analysis.yml)
 
 This project can be used to create images that include
 [cisagov/pca-gophish-composition](https://github.com/cisagov/pca-gophish-composition).
