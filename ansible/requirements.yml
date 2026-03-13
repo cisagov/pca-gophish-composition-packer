@@ -5,7 +5,10 @@
 # either (or both) can be an empty list, e.g., collections: [].
 collections:
   # Required by the following playbooks:
+  # - ansible/pca_gophish.yml (uses amazon.aws.ssm_parameter)
+  # - ansible/vnc.yml (uses amazon.aws.ssm_parameter)
   # - ansible/wazuh_agent.yml (uses amazon.aws.ssm_parameter)
+  # - ansible/xfce.yml (uses amazon.aws.ssm_parameter)
   - amazon.aws
   # Required by the following Ansible roles:
   # - ansible-role-amazon-efs-utils (uses community.general.json_query
@@ -15,6 +18,8 @@ collections:
   # - ansible-role-cloudwatch-agent (uses community.general.ini_file)
   # - ansible-role-persist-journald (uses community.general.ini_file)
   # - ansible-role-systemd-resolved (uses community.general.ini_file)
+  # - ansible-role-xfce-cool (uses community.general.xml and
+  #   community.general.sudosu)
   - community.general
 roles:
   - name: amazon_efs_utils
