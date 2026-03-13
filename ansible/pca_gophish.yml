@@ -191,4 +191,5 @@
   vars:
     gophish_group: gophish
     pca_gophish_composition_path: /var/pca/pca-gophish-composition
-    vnc_username: "{{ lookup('aws_ssm', '/vnc/username') }}"
+    vnc_username: >-
+      {{ lookup('amazon.aws.ssm_parameter', '/vnc/username') }}
